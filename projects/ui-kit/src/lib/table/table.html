@@ -1,0 +1,58 @@
+<table>
+  <colgroup>
+    @for (c of cols(); track c.key) {
+      <col [style.width]="c.width" />
+    }
+  </colgroup>
+  <thead>
+    <tr>
+      @for (c of cols(); track c.key) {
+        <th
+          #th
+          [draggable]="!resizing()"
+          [class.drag-over]="overKey() === c.key && dragKey() !== c.key"
+          [attr.aria-sort]="
+            sortKey() === c.key ? (sortDir() === 'asc' ? 'ascending' : 'descending') : null
+          "
+          (dragstart)="onDragStart($event, c.key)"
+          (dragover)="onDragOver($event, c.key)"
+          (drop)="onDrop($event, c.key)"
+          (dragend)="onDragEnd()"
+        >
+          @if (c.sortable) {
+            <button type="button" (click)="sortBy(c.key)">
+              {{ c.label }}
+              @if (sortKey() === c.key) {
+                {{ sortDir() === 'asc' ? '▲' : '▼' }}
+              }
+            </button>
+          } @else {
+            {{ c.label }}
+          }
+          <span class="resizer" (pointerdown)="startResize($event, c.key, th)"></span>
+        </th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of rows(); track $index) {
+      <tr>
+        @for (c of cols(); track c.key) {
+          <td>{{ row[c.key] }}</td>
+        }
+      </tr>
+    } @empty {
+      <tr>
+        <td [attr.colspan]="cols().length">No data</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div class="pager">
+  <button type="button" (click)="page.set(page() - 1)" [disabled]="page() === 0">Prev</button>
+  <span>{{ page() + 1 }} / {{ totalPages() }}</span>
+  <button type="button" (click)="page.set(page() + 1)" [disabled]="page() + 1 >= totalPages()">
+    Next
+  </button>
+</div>

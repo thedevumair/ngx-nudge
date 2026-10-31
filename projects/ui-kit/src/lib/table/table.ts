@@ -3,7 +3,7 @@ import { Component, computed, input, isDevMode, linkedSignal, output, signal } f
 export interface Column {
   key: string;
   label?: string;
-  width?: number | string;
+  width?: number;
   sortable?: boolean;
   order?: number;
 }
@@ -19,6 +19,7 @@ export class Table<T extends Record<string, any>> {
   columns = input<(string | Column)[]>();
   pageSize = input(10);
   syncId = input<string>();
+  public syncTimer: ReturnType<typeof setTimeout> | undefined;
 
   // Layout badalne par naya config bahar nikalta hai
   columnsChange = output<Column[]>();
@@ -42,10 +43,12 @@ export class Table<T extends Record<string, any>> {
     this.layout().map((c) => ({
       key: c.key,
       label: c.label ?? c.key,
-      width: typeof c.width === 'number' ? `${c.width}px` : (c.width ?? null),
+      width: c.width ?? 150,
       sortable: c.sortable ?? true,
     })),
   );
+
+  totalWidth = computed(() => this.cols().reduce((sum, c) => sum + c.width, 0));
 
   sorted = computed(() => {
     const key = this.sortKey();
@@ -138,15 +141,19 @@ export class Table<T extends Record<string, any>> {
 
   private emitLayout() {
     const cols = this.layout().map((c, i) => ({ ...c, order: i }));
-    this.columnsChange.emit(cols);
+    this.columnsChange.emit(cols); // app ko foran batao
 
     const id = this.syncId();
-    if (id && isDevMode()) {
+    if (!id || !isDevMode()) return;
+
+    // VS Code ko sirf tab bhejo jab 400ms koi nayi change na aaye
+    clearTimeout(this.syncTimer);
+    this.syncTimer = setTimeout(() => {
       fetch('http://127.0.0.1:4567/columns', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, columns: cols }),
-      }).catch(() => {}); // extension na chal rahi ho to chup rahe
-    }
+      }).catch(() => {});
+    }, 400);
   }
 }

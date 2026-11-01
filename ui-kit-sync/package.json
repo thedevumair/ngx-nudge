@@ -3,7 +3,13 @@
   "displayName": "UI Kit Sync",
   "version": "0.0.1",
   "publisher": "local",
-  "engines": { "vscode": "^1.80.0" },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "description": "Syncs UI Kit component layout changes from the browser to Angular source files",
+  "license": "UNLICENSED",
   "main": "./extension.js",
-  "activationEvents": ["onStartupFinished"]
+  "activationEvents": [
+    "onStartupFinished"
+  ]
 }

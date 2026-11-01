@@ -1,0 +1,35 @@
+.grid {
+  display: grid;
+}
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+  overflow: hidden;
+}
+.bar {
+  padding: 4px 8px;
+  background: #eee;
+  font-size: 12px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.body {
+  flex: 1;
+  padding: 8px;
+  overflow: auto;
+}
+.handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  touch-action: none;
+  background: linear-gradient(135deg, transparent 50%, #4c8bf5 50%);
+}

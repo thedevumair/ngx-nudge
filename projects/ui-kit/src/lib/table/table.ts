@@ -1,5 +1,5 @@
 import { Component, computed, input, isDevMode, linkedSignal, output, signal } from '@angular/core';
-
+import { syncToSource } from '../sync';
 export interface Column {
   key: string;
   label?: string;
@@ -19,7 +19,6 @@ export class Table<T extends Record<string, any>> {
   columns = input<(string | Column)[]>();
   pageSize = input(10);
   syncId = input<string>();
-  public syncTimer: ReturnType<typeof setTimeout> | undefined;
 
   // Layout badalne par naya config bahar nikalta hai
   columnsChange = output<Column[]>();
@@ -141,19 +140,7 @@ export class Table<T extends Record<string, any>> {
 
   private emitLayout() {
     const cols = this.layout().map((c, i) => ({ ...c, order: i }));
-    this.columnsChange.emit(cols); // app ko foran batao
-
-    const id = this.syncId();
-    if (!id || !isDevMode()) return;
-
-    // VS Code ko sirf tab bhejo jab 400ms koi nayi change na aaye
-    clearTimeout(this.syncTimer);
-    this.syncTimer = setTimeout(() => {
-      fetch('http://127.0.0.1:4567/columns', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, columns: cols }),
-      }).catch(() => {});
-    }, 400);
+    this.columnsChange.emit(cols);
+    syncToSource(this.syncId(), 'columns', cols);
   }
 }

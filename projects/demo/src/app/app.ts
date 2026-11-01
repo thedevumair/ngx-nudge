@@ -1,12 +1,17 @@
 import { Component, signal } from '@angular/core';
-import { Table, Column } from 'ui-kit';
-
+import { Table, Column, Grid, GridItem } from 'ui-kit';
 @Component({
   selector: 'app-root',
-  imports: [Table],
+  imports: [Table, Grid],
   template: `
     <ui-table syncId="users" [data]="users" [columns]="columns" />
     <ui-table syncId="admins" [data]="admins" [columns]="adminColumns" />
+    <h3>Dashboard</h3>
+    <ui-grid syncId="dash" [layout]="dash">
+      <ng-template let-w
+        ><strong>{{ w.id }}</strong> widget</ng-template
+      >
+    </ui-grid>
   `,
 })
 export class App {
@@ -32,6 +37,12 @@ export class App {
     { key: 'username', width: 200 },
     { key: 'lastLogin', width: 200 },
     { key: 'level', width: 100 },
+  ];
+
+  dash: GridItem[] = [
+    { id: 'sales', x: 0, y: 0, w: 6, h: 2 },
+    { id: 'users', x: 6, y: 0, w: 6, h: 2 },
+    { id: 'orders', x: 0, y: 2, w: 12, h: 2 },
   ];
 
   output = signal('');

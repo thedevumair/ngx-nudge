@@ -24,8 +24,8 @@ function activate(context) {
     req.on('data', (chunk) => (body += chunk));
     req.on('end', async () => {
       try {
-        const { id, columns } = JSON.parse(body);
-        const ok = await applyColumns(id, columns);
+        const { id, prop = 'columns', value, columns } = JSON.parse(body);
+        const ok = await applyColumns(id, prop, value ?? columns);
         res.writeHead(ok ? 200 : 404);
         res.end(ok ? 'ok' : 'table/columns not found');
       } catch (e) {
@@ -46,22 +46,23 @@ function loadTs() {
   return require(path.join(root, 'node_modules', 'typescript'));
 }
 
-async function applyColumns(id, columns) {
+async function applyColumns(id, inputName, value) {
   const ts = loadTs();
   const files = await vscode.workspace.findFiles(
     '**/*.{ts,html}',
     '{**/node_modules/**,**/dist/**,**/.angular/**}',
   );
-  const tagRe = new RegExp(`<ui-table\\b[^>]*\\bsyncId="${id}"[^>]*>`);
+  const tagRe = new RegExp(`<ui-[\\w-]+\\b[^>]*\\bsyncId="${id}"[^>]*>`);
+  const bindRe = new RegExp(`\\[${inputName}\\]\\s*=\\s*"\\s*([A-Za-z_$][\\w$]*)\\s*"`);
 
   for (const uri of files) {
     const text = fs.readFileSync(uri.fsPath, 'utf8');
     const tag = tagRe.exec(text);
     if (!tag) continue;
 
-    const bind = /\[columns\]\s*=\s*"\s*([A-Za-z_$][\w$]*)\s*"/.exec(tag[0]);
+    const bind = bindRe.exec(tag[0]);
     if (!bind) continue;
-    const prop = bind[1];
+    const propName = bind[1];
 
     // inline template: isi .ts file mein; alag template: usi naam ki .ts file
     const ownerPath = uri.fsPath.endsWith('.html')
@@ -69,13 +70,13 @@ async function applyColumns(id, columns) {
       : uri.fsPath;
     if (!fs.existsSync(ownerPath)) continue;
 
-    const ok = await replaceProperty(ts, vscode.Uri.file(ownerPath), prop, columns);
+    const ok = await replaceProperty(ts, vscode.Uri.file(ownerPath), propName, value);
     if (ok) return true;
   }
   return false;
 }
 
-async function replaceProperty(ts, uri, prop, columns) {
+async function replaceProperty(ts, uri, prop, value) {
   const doc = await vscode.workspace.openTextDocument(uri); // unsaved content bhi milta hai
   const text = doc.getText();
   const sf = ts.createSourceFile(uri.fsPath, text, ts.ScriptTarget.Latest, true);
@@ -101,7 +102,7 @@ async function replaceProperty(ts, uri, prop, columns) {
   const lineStart = text.lastIndexOf('\n', target.getStart(sf)) + 1;
   const indent = text.slice(lineStart).match(/^[ \t]*/)[0];
 
-  const lines = columns.map((c) => {
+  const lines = value.map((c) => {
     const { order, ...rest } = c; // array ki position hi order hai
     const props = Object.entries(rest)
       .map(([k, v]) => `${k}: ${typeof v === 'string' ? `'${v.replace(/'/g, "\\'")}'` : v}`)

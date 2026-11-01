@@ -1,0 +1,22 @@
+<div
+  class="grid"
+  [style.grid-template-columns]="'repeat(' + cols() + ', 1fr)'"
+  [style.grid-auto-rows.px]="rowHeight()"
+  [style.gap.px]="gap()"
+>
+  @for (item of items(); track item.id) {
+    <div
+      class="cell"
+      [style.grid-column]="item.x + 1 + ' / span ' + item.w"
+      [style.grid-row]="item.y + 1 + ' / span ' + item.h"
+    >
+      <div class="bar" (pointerdown)="startDrag($event, item, 'move')">⋮⋮ {{ item.id }}</div>
+      <div class="body">
+        @if (itemTpl(); as tpl) {
+          <ng-container [ngTemplateOutlet]="tpl" [ngTemplateOutletContext]="{ $implicit: item }" />
+        }
+      </div>
+      <span class="handle" (pointerdown)="startDrag($event, item, 'resize')"></span>
+    </div>
+  }
+</div>

@@ -15,7 +15,7 @@ function activate(context) {
       res.writeHead(204);
       return res.end();
     }
-    if (req.method !== 'POST' || req.url !== '/columns') {
+    if (req.method !== 'POST' || (req.url !== '/columns' && req.url !== '/tokens')) {
       res.writeHead(404);
       return res.end();
     }
@@ -24,10 +24,13 @@ function activate(context) {
     req.on('data', (chunk) => (body += chunk));
     req.on('end', async () => {
       try {
-        const { id, prop = 'columns', value, columns } = JSON.parse(body);
-        const ok = await applyColumns(id, prop, value ?? columns);
+        const data = JSON.parse(body);
+        const ok =
+          req.url === '/tokens'
+            ? await applyTokens(data.tokens)
+            : await applyColumns(data.id, data.prop ?? 'columns', data.value ?? data.columns);
         res.writeHead(ok ? 200 : 404);
-        res.end(ok ? 'ok' : 'table/columns not found');
+        res.end(ok ? 'ok' : 'target not found');
       } catch (e) {
         res.writeHead(500);
         res.end(String(e));
@@ -44,6 +47,59 @@ function loadTs() {
   const root = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
   if (!root) throw new Error('No workspace folder open');
   return require(path.join(root, 'node_modules', 'typescript'));
+}
+
+const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+async function applyTokens(tokens) {
+  const files = await vscode.workspace.findFiles(
+    '**/*.{scss,css}',
+    '{**/node_modules/**,**/dist/**,**/.angular/**}',
+  );
+  const edit = new vscode.WorkspaceEdit();
+  const pending = new Map(Object.entries(tokens));
+
+  // 1) Jahan variable pehle se likha hai, wahin value badlo
+  for (const uri of files) {
+    if (!pending.size) break;
+    const doc = await vscode.workspace.openTextDocument(uri); // unsaved content bhi milta hai
+    const text = doc.getText();
+    for (const [name, value] of [...pending]) {
+      const m = new RegExp(`(${esc(name)}\\s*:\\s*)([^;}]+)`).exec(text);
+      if (!m) continue;
+      const start = m.index + m[1].length;
+      edit.replace(
+        uri,
+        new vscode.Range(doc.positionAt(start), doc.positionAt(start + m[2].length)),
+        value,
+      );
+      pending.delete(name);
+    }
+  }
+
+  // 2) Jo kahin nahi mila, global styles file ke :root mein daalo
+  if (pending.size) {
+    const globals = await vscode.workspace.findFiles(
+      '**/styles.{scss,css}',
+      '{**/node_modules/**,**/dist/**,**/.angular/**}',
+      1,
+    );
+    if (!globals.length) return false;
+    const uri = globals[0];
+    const doc = await vscode.workspace.openTextDocument(uri);
+    const text = doc.getText();
+    const lines = [...pending].map(([k, v]) => `  ${k}: ${v};`).join('\n');
+    const root = /:root\s*\{/.exec(text);
+    if (root) {
+      edit.insert(uri, doc.positionAt(root.index + root[0].length), `\n${lines}`);
+    } else {
+      edit.insert(uri, doc.positionAt(text.length), `\n:root {\n${lines}\n}\n`);
+    }
+  }
+
+  await vscode.workspace.applyEdit(edit); // save nahi karta
+  vscode.window.setStatusBarMessage('UI Kit Sync: styles updated (unsaved)', 2500);
+  return true;
 }
 
 async function applyColumns(id, inputName, value) {

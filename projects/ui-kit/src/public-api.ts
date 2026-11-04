@@ -5,3 +5,4 @@
 export * from './lib/ui-kit';
 export * from './lib/table/table';
 export * from './lib/grid/grid';
+export * from './lib/theme-panel/theme-panel';

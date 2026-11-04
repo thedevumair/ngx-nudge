@@ -1,8 +1,8 @@
 import { Component, signal } from '@angular/core';
-import { Table, Column, Grid, GridItem } from 'ui-kit';
+import { Table, Column, Grid, GridItem, ThemePanel } from 'ui-kit';
 @Component({
   selector: 'app-root',
-  imports: [Table, Grid],
+  imports: [Table, Grid, ThemePanel],
   template: `
     <ui-table syncId="users" [data]="users" [columns]="columns" />
     <ui-table syncId="admins" [data]="admins" [columns]="adminColumns" />
@@ -12,6 +12,7 @@ import { Table, Column, Grid, GridItem } from 'ui-kit';
         ><strong>{{ w.id }}</strong> widget</ng-template
       >
     </ui-grid>
+    <ui-theme-panel />
   `,
 })
 export class App {

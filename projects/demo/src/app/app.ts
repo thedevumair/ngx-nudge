@@ -1,9 +1,18 @@
 import { Component, signal } from '@angular/core';
-import { Table, Column, Grid, GridItem, ThemePanel } from 'ui-kit';
+import { Table, Column, Grid, GridItem, ThemePanel, Card, Button } from 'ui-kit';
 @Component({
   selector: 'app-root',
-  imports: [Table, Grid, ThemePanel],
+  imports: [Table, Grid, ThemePanel, Card, Button],
   template: `
+    <ui-card>
+      <h3 uiCardHeader>Kit demo</h3>
+      Ye card aur button dono ek hi theme se chalte hain.
+      <div uiCardFooter>
+        <button ui-button>Save</button>
+        <button ui-button variant="outline" size="sm">Cancel</button>
+        <button ui-button variant="ghost" disabled>Disabled</button>
+      </div>
+    </ui-card>
     <ui-table syncId="users" [data]="users" [columns]="columns" />
     <ui-table syncId="admins" [data]="admins" [columns]="adminColumns" />
     <h3>Dashboard</h3>

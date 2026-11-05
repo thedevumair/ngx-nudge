@@ -1,7 +1,8 @@
 import { Component, isDevMode, signal } from '@angular/core';
-import { syncTokens } from '../sync';
+import { syncTokens } from '../core/sync';
 
 export interface ThemeToken {
+  group: string;
   name: string;
   label: string;
   type: 'color' | 'px';
@@ -10,12 +11,104 @@ export interface ThemeToken {
   max?: number;
 }
 
-export const TABLE_TOKENS: ThemeToken[] = [
-  { name: '--ui-table-header-bg', label: 'Header background', type: 'color', default: '#f5f5f5' },
-  { name: '--ui-table-header-color', label: 'Header text', type: 'color', default: '#222222' },
-  { name: '--ui-table-stripe-bg', label: 'Row stripe', type: 'color', default: '#fafafa' },
-  { name: '--ui-table-border-color', label: 'Border', type: 'color', default: '#dddddd' },
+export const TOKENS: ThemeToken[] = [
+  // Global: ye badlo to poori kit badle
   {
+    group: 'Global',
+    name: '--ui-color-primary',
+    label: 'Primary colour',
+    type: 'color',
+    default: '#3b5bdb',
+  },
+  {
+    group: 'Global',
+    name: '--ui-color-surface',
+    label: 'Surface',
+    type: 'color',
+    default: '#ffffff',
+  },
+  { group: 'Global', name: '--ui-color-text', label: 'Text', type: 'color', default: '#222222' },
+  {
+    group: 'Global',
+    name: '--ui-color-border',
+    label: 'Border',
+    type: 'color',
+    default: '#dddddd',
+  },
+  {
+    group: 'Global',
+    name: '--ui-radius',
+    label: 'Corner radius',
+    type: 'px',
+    default: '6px',
+    min: 0,
+    max: 24,
+  },
+  {
+    group: 'Global',
+    name: '--ui-font-size',
+    label: 'Font size',
+    type: 'px',
+    default: '14px',
+    min: 10,
+    max: 22,
+  },
+
+  // Button
+  {
+    group: 'Button',
+    name: '--ui-button-pad-y',
+    label: 'Padding vertical',
+    type: 'px',
+    default: '8px',
+    min: 0,
+    max: 24,
+  },
+  {
+    group: 'Button',
+    name: '--ui-button-pad-x',
+    label: 'Padding horizontal',
+    type: 'px',
+    default: '16px',
+    min: 0,
+    max: 40,
+  },
+
+  // Card
+  {
+    group: 'Card',
+    name: '--ui-card-pad',
+    label: 'Padding',
+    type: 'px',
+    default: '16px',
+    min: 0,
+    max: 40,
+  },
+
+  // Table
+  {
+    group: 'Table',
+    name: '--ui-table-header-bg',
+    label: 'Header background',
+    type: 'color',
+    default: '#f5f5f5',
+  },
+  {
+    group: 'Table',
+    name: '--ui-table-header-color',
+    label: 'Header text',
+    type: 'color',
+    default: '#222222',
+  },
+  {
+    group: 'Table',
+    name: '--ui-table-stripe-bg',
+    label: 'Row stripe',
+    type: 'color',
+    default: '#fafafa',
+  },
+  {
+    group: 'Table',
     name: '--ui-table-pad-y',
     label: 'Padding vertical',
     type: 'px',
@@ -24,28 +117,13 @@ export const TABLE_TOKENS: ThemeToken[] = [
     max: 32,
   },
   {
+    group: 'Table',
     name: '--ui-table-pad-x',
     label: 'Padding horizontal',
     type: 'px',
     default: '12px',
     min: 0,
     max: 32,
-  },
-  {
-    name: '--ui-table-radius',
-    label: 'Corner radius',
-    type: 'px',
-    default: '0px',
-    min: 0,
-    max: 24,
-  },
-  {
-    name: '--ui-table-font-size',
-    label: 'Font size',
-    type: 'px',
-    default: '14px',
-    min: 10,
-    max: 22,
   },
 ];
 
@@ -56,27 +134,32 @@ export const TABLE_TOKENS: ThemeToken[] = [
       <div class="panel">
         <button type="button" class="toggle" (click)="open.set(!open())">Theme</button>
         @if (open()) {
-          @for (t of tokens; track t.name) {
-            <label>
-              <span>{{ t.label }}</span>
-              @if (t.type === 'color') {
-                <input
-                  type="color"
-                  [value]="values()[t.name]"
-                  (input)="set(t, $any($event.target).value)"
-                />
-              } @else {
-                <input
-                  type="range"
-                  [min]="t.min"
-                  [max]="t.max"
-                  [value]="px(values()[t.name])"
-                  (input)="set(t, $any($event.target).value + 'px')"
-                />
-                <em>{{ values()[t.name] }}</em>
+          <div class="list">
+            @for (t of tokens; track t.name; let i = $index) {
+              @if (i === 0 || tokens[i - 1].group !== t.group) {
+                <h4>{{ t.group }}</h4>
               }
-            </label>
-          }
+              <label>
+                <span>{{ t.label }}</span>
+                @if (t.type === 'color') {
+                  <input
+                    type="color"
+                    [value]="values()[t.name]"
+                    (input)="set(t, $any($event.target).value)"
+                  />
+                } @else {
+                  <input
+                    type="range"
+                    [min]="t.min"
+                    [max]="t.max"
+                    [value]="px(values()[t.name])"
+                    (input)="set(t, $any($event.target).value + 'px')"
+                  />
+                  <em>{{ values()[t.name] }}</em>
+                }
+              </label>
+            }
+          </div>
         }
       </div>
     }
@@ -99,8 +182,18 @@ export const TABLE_TOKENS: ThemeToken[] = [
       }
       .toggle {
         width: 100%;
-        margin-bottom: 8px;
         cursor: pointer;
+      }
+      .list {
+        max-height: 60vh;
+        overflow-y: auto;
+        margin-top: 8px;
+      }
+      h4 {
+        margin: 12px 0 4px;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #666;
       }
       label {
         display: grid;
@@ -121,14 +214,14 @@ export const TABLE_TOKENS: ThemeToken[] = [
 })
 export class ThemePanel {
   dev = isDevMode();
-  tokens = TABLE_TOKENS;
+  tokens = TOKENS;
   open = signal(true);
   values = signal<Record<string, string>>(this.read());
 
   private read() {
     const cs = getComputedStyle(document.documentElement);
     const out: Record<string, string> = {};
-    for (const t of TABLE_TOKENS) {
+    for (const t of TOKENS) {
       const raw = cs.getPropertyValue(t.name).trim();
       out[t.name] = t.type === 'color' ? this.hex(raw, t.default) : raw || t.default;
     }

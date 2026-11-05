@@ -1,0 +1,54 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: var(--ui-button-pad-y, 8px) var(--ui-button-pad-x, 16px);
+  font: inherit;
+  font-size: var(--ui-button-font-size, var(--ui-font-size, 14px));
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ui-button-color, var(--ui-color-primary-contrast, #ffffff));
+  background: var(--ui-button-bg, var(--ui-color-primary, #3b5bdb));
+  border: 1px solid var(--ui-button-bg, var(--ui-color-primary, #3b5bdb));
+  border-radius: var(--ui-button-radius, var(--ui-radius, 6px));
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+  transition: filter 0.15s ease;
+}
+
+:host(:hover) {
+  filter: brightness(0.92);
+}
+
+:host(:focus-visible) {
+  outline: 2px solid var(--ui-color-focus, #4c8bf5);
+  outline-offset: 2px;
+}
+
+:host([disabled]),
+:host([aria-disabled='true']) {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+:host([data-variant='outline']) {
+  color: var(--ui-button-bg, var(--ui-color-primary, #3b5bdb));
+  background: transparent;
+}
+
+:host([data-variant='ghost']) {
+  color: var(--ui-button-bg, var(--ui-color-primary, #3b5bdb));
+  background: transparent;
+  border-color: transparent;
+}
+
+:host([data-size='sm']) {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+:host([data-size='lg']) {
+  padding: 12px 22px;
+  font-size: 16px;
+}

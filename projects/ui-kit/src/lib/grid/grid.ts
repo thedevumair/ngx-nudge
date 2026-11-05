@@ -10,7 +10,7 @@ import {
   output,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { syncToSource } from '../sync';
+import { syncToSource } from '../core/sync';
 
 export interface GridItem {
   id: string;

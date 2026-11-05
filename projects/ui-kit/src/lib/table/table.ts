@@ -1,5 +1,5 @@
 import { Component, computed, input, isDevMode, linkedSignal, output, signal } from '@angular/core';
-import { syncToSource } from '../sync';
+import { syncToSource } from '../core/sync';
 export interface Column {
   key: string;
   label?: string;

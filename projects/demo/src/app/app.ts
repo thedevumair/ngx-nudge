@@ -1,5 +1,18 @@
 import { Component, signal } from '@angular/core';
-import { Button, Card, Column, Grid, GridItem, Table, ThemePanel, syncTokens } from 'ui-kit';
+import {
+  Badge,
+  Button,
+  Card,
+  Column,
+  Dialog,
+  Grid,
+  GridItem,
+  Select,
+  Table,
+  TextInput,
+  ThemePanel,
+  syncTokens,
+} from 'ui-kit';
 
 const PRESETS: Record<string, Record<string, string>> = {
   Light: {
@@ -43,11 +56,21 @@ const SNIPPETS = {
 </ui-grid>
 
 // Drag ya resize karo: board array khud badalta hai.`,
+  forms: `<input ui-input placeholder="Name" />
+<select ui-select><option>Admin</option></select>
+<ui-badge variant="success">Active</ui-badge>`,
+  dialog: `<ui-dialog [(open)]="show">
+  <h3 uiDialogTitle>Delete user?</h3>
+  This cannot be undone.
+  <div uiDialogActions>
+    <button ui-button size="sm">Delete</button>
+  </div>
+</ui-dialog>`,
 };
 
 @Component({
   selector: 'app-root',
-  imports: [Table, Grid, ThemePanel, Card, Button],
+  imports: [Table, Grid, ThemePanel, Card, Button, Badge, TextInput, Select, Dialog],
   template: `
     <div class="shell">
       <header class="top">
@@ -147,6 +170,52 @@ const SNIPPETS = {
             </ui-grid>
             <pre class="code">{{ snippets.grid }}</pre>
           }
+          @case ('forms') {
+            <h1>Inputs & badge</h1>
+            <p class="lead">
+              Native elements with kit styling, so keyboard and forms work out of the box.
+            </p>
+            <ui-card>
+              <h3 uiCardHeader>Preview</h3>
+              <div class="form">
+                <label>Name <input ui-input placeholder="Your name" /></label>
+                <label>
+                  Role
+                  <select ui-select>
+                    <option>Admin</option>
+                    <option>User</option>
+                  </select>
+                </label>
+                <label>Invalid <input ui-input aria-invalid="true" value="oops" /></label>
+                <div class="row">
+                  <ui-badge>Neutral</ui-badge>
+                  <ui-badge variant="primary">Primary</ui-badge>
+                  <ui-badge variant="success">Success</ui-badge>
+                  <ui-badge variant="warning">Warning</ui-badge>
+                  <ui-badge variant="danger">Danger</ui-badge>
+                </div>
+              </div>
+            </ui-card>
+            <pre class="code">{{ snippets.forms }}</pre>
+          }
+          @case ('dialog') {
+            <h1>Dialog</h1>
+            <p class="lead">
+              Built on the native dialog element: Esc, focus trap and backdrop click included.
+            </p>
+            <button ui-button (click)="showDialog.set(true)">Open dialog</button>
+            <ui-dialog [(open)]="showDialog">
+              <h3 uiDialogTitle>Delete user?</h3>
+              This cannot be undone.
+              <div uiDialogActions>
+                <button ui-button variant="outline" size="sm" (click)="showDialog.set(false)">
+                  Cancel
+                </button>
+                <button ui-button size="sm" (click)="showDialog.set(false)">Delete</button>
+              </div>
+            </ui-dialog>
+            <pre class="code">{{ snippets.dialog }}</pre>
+          }
         }
       </main>
     </div>
@@ -241,6 +310,16 @@ const SNIPPETS = {
           var(--ui-color-surface, #ffffff)
         );
       }
+      .form {
+        display: grid;
+        gap: 12px;
+        max-width: 360px;
+      }
+      .form label {
+        display: grid;
+        gap: 4px;
+        font-size: 13px;
+      }
     `,
   ],
 })
@@ -253,8 +332,11 @@ export class App {
     { id: 'card', label: 'Card' },
     { id: 'table', label: 'Table' },
     { id: 'grid', label: 'Dashboard grid' },
+    { id: 'forms', label: 'Inputs & badge' },
+    { id: 'dialog', label: 'Dialog' },
   ];
   page = signal('overview');
+  showDialog = signal(false);
 
   applyPreset(name: string) {
     const tokens = PRESETS[name];

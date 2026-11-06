@@ -8,3 +8,4 @@ export * from './lib/grid/grid';
 export * from './lib/theme-panel/theme-panel';
 export * from './lib/card/card';
 export * from './lib/button/button';
+export * from './lib/core/sync';

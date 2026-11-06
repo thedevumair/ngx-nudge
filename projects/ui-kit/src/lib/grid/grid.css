@@ -5,14 +5,19 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #fafafa;
+  color: var(--ui-color-text, #222222);
+  background: var(--ui-grid-cell-bg, var(--ui-color-surface, #ffffff));
+  border: 1px solid var(--ui-color-border, #dddddd);
+  border-radius: var(--ui-radius, 6px);
   overflow: hidden;
 }
 .bar {
   padding: 4px 8px;
-  background: #eee;
+  background: color-mix(
+    in srgb,
+    var(--ui-color-text, #222222) 8%,
+    var(--ui-color-surface, #ffffff)
+  );
   font-size: 12px;
   cursor: grab;
   user-select: none;
@@ -31,5 +36,5 @@
   height: 16px;
   cursor: nwse-resize;
   touch-action: none;
-  background: linear-gradient(135deg, transparent 50%, #4c8bf5 50%);
+  background: linear-gradient(135deg, transparent 50%, var(--ui-color-primary, #4c8bf5) 50%);
 }

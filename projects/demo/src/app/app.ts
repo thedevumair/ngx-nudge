@@ -1,30 +1,269 @@
 import { Component, signal } from '@angular/core';
-import { Table, Column, Grid, GridItem, ThemePanel, Card, Button } from 'ui-kit';
+import { Button, Card, Column, Grid, GridItem, Table, ThemePanel, syncTokens } from 'ui-kit';
+
+const PRESETS: Record<string, Record<string, string>> = {
+  Light: {
+    '--ui-color-primary': '#3b5bdb',
+    '--ui-color-primary-contrast': '#ffffff',
+    '--ui-color-surface': '#ffffff',
+    '--ui-color-text': '#222222',
+    '--ui-color-border': '#dddddd',
+  },
+  Dark: {
+    '--ui-color-primary': '#748ffc',
+    '--ui-color-primary-contrast': '#111827',
+    '--ui-color-surface': '#1b1e27',
+    '--ui-color-text': '#e6e8ee',
+    '--ui-color-border': '#343a4a',
+  },
+  Rose: {
+    '--ui-color-primary': '#d6336c',
+    '--ui-color-primary-contrast': '#ffffff',
+    '--ui-color-surface': '#fff7fa',
+    '--ui-color-text': '#3b1f2b',
+    '--ui-color-border': '#f0c9d6',
+  },
+};
+
+const SNIPPETS = {
+  button: `<button ui-button>Save</button>
+<button ui-button variant="outline" size="sm">Cancel</button>
+<button ui-button variant="ghost" disabled>Disabled</button>`,
+  card: `<ui-card>
+  <h3 uiCardHeader>Title</h3>
+  Body content
+  <div uiCardFooter><button ui-button>OK</button></div>
+</ui-card>`,
+  table: `<ui-table syncId="orders" [data]="orders" [columns]="orderColumns" />
+
+// Resize ya reorder karo: orderColumns array
+// aapki file mein khud badal jata hai (unsaved).`,
+  grid: `<ui-grid syncId="board" [layout]="board">
+  <ng-template let-w>{{ w.id }}</ng-template>
+</ui-grid>
+
+// Drag ya resize karo: board array khud badalta hai.`,
+};
+
 @Component({
   selector: 'app-root',
   imports: [Table, Grid, ThemePanel, Card, Button],
   template: `
-    <ui-card>
-      <h3 uiCardHeader>Kit demo</h3>
-      Ye card aur button dono ek hi theme se chalte hain.
-      <div uiCardFooter>
-        <button ui-button>Save</button>
-        <button ui-button variant="outline" size="sm">Cancel</button>
-        <button ui-button variant="ghost" disabled>Disabled</button>
-      </div>
-    </ui-card>
-    <ui-table syncId="users" [data]="users" [columns]="columns" />
-    <ui-table syncId="admins" [data]="admins" [columns]="adminColumns" />
-    <h3>Dashboard</h3>
-    <ui-grid syncId="dash" [layout]="dash">
-      <ng-template let-w
-        ><strong>{{ w.id }}</strong> widget</ng-template
-      >
-    </ui-grid>
+    <div class="shell">
+      <header class="top">
+        <strong>UI Kit</strong>
+        <span class="tag">Angular components that update your source</span>
+        <div class="presets">
+          @for (name of presetNames; track name) {
+            <button ui-button variant="outline" size="sm" (click)="applyPreset(name)">
+              {{ name }}
+            </button>
+          }
+        </div>
+      </header>
+
+      <nav class="side">
+        @for (p of pages; track p.id) {
+          <button
+            type="button"
+            class="nav"
+            [class.active]="page() === p.id"
+            (click)="page.set(p.id)"
+          >
+            {{ p.label }}
+          </button>
+        }
+      </nav>
+
+      <main class="main">
+        @switch (page()) {
+          @case ('overview') {
+            <h1>Components that write back</h1>
+            <p class="lead">
+              Resize a column, drag a widget, or change a colour on screen. The matching array or
+              CSS variable in your source file updates itself as an unsaved edit. Review it, undo it
+              or save it.
+            </p>
+            <div class="stack">
+              <ui-card>
+                <h3 uiCardHeader>Live source sync</h3>
+                Layout and style changes are written into your own files, in dev mode only.
+              </ui-card>
+              <ui-card>
+                <h3 uiCardHeader>One theme, every component</h3>
+                Change one token and the whole kit follows. Try the presets at the top.
+              </ui-card>
+              <ui-card>
+                <h3 uiCardHeader>Clean, small API</h3>
+                Standalone components, signals, plain CSS variables. No modules, no theme files.
+                <div uiCardFooter>
+                  <button ui-button (click)="page.set('table')">See the table</button>
+                </div>
+              </ui-card>
+            </div>
+          }
+          @case ('button') {
+            <h1>Button</h1>
+            <p class="lead">Three variants and three sizes, driven by theme tokens.</p>
+            <ui-card>
+              <h3 uiCardHeader>Preview</h3>
+              <div class="row">
+                <button ui-button>Save</button>
+                <button ui-button variant="outline" size="sm">Cancel</button>
+                <button ui-button variant="ghost" disabled>Disabled</button>
+              </div>
+            </ui-card>
+            <pre class="code">{{ snippets.button }}</pre>
+          }
+          @case ('card') {
+            <h1>Card</h1>
+            <p class="lead">A surface with optional header and footer slots.</p>
+            <ui-card>
+              <h3 uiCardHeader>Preview</h3>
+              Body content goes here.
+              <div uiCardFooter><button ui-button size="sm">OK</button></div>
+            </ui-card>
+            <pre class="code">{{ snippets.card }}</pre>
+          }
+          @case ('table') {
+            <h1>Table</h1>
+            <p class="lead">
+              Sort, paginate, resize and reorder. Resize a column, then look at
+              <code>app.ts</code>.
+            </p>
+            <h3>Users</h3>
+            <ui-table syncId="users" [data]="users" [columns]="columns" />
+            <h3>Admins</h3>
+            <ui-table syncId="admins" [data]="admins" [columns]="adminColumns" />
+            <pre class="code">{{ snippets.table }}</pre>
+          }
+          @case ('grid') {
+            <h1>Dashboard grid</h1>
+            <p class="lead">Drag widgets by the bar, resize from the corner.</p>
+            <ui-grid syncId="dash" [layout]="dash">
+              <ng-template let-w
+                ><strong>{{ w.id }}</strong> widget</ng-template
+              >
+            </ui-grid>
+            <pre class="code">{{ snippets.grid }}</pre>
+          }
+        }
+      </main>
+    </div>
     <ui-theme-panel />
   `,
+  styles: [
+    `
+      :host {
+        display: block;
+        min-height: 100vh;
+        color: var(--ui-color-text, #222222);
+        background: var(--ui-color-surface, #ffffff);
+        font-family: system-ui, sans-serif;
+      }
+      .shell {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        grid-template-rows: auto 1fr;
+        min-height: 100vh;
+      }
+      .top {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 24px;
+        border-bottom: 1px solid var(--ui-color-border, #dddddd);
+      }
+      .tag {
+        font-size: 13px;
+        opacity: 0.65;
+      }
+      .presets {
+        display: flex;
+        gap: 8px;
+        margin-left: auto;
+      }
+      .side {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 16px;
+        border-right: 1px solid var(--ui-color-border, #dddddd);
+      }
+      .nav {
+        padding: 8px 12px;
+        text-align: left;
+        font: inherit;
+        color: inherit;
+        background: transparent;
+        border: 0;
+        border-radius: var(--ui-radius, 6px);
+        cursor: pointer;
+      }
+      .nav:hover {
+        background: color-mix(in srgb, var(--ui-color-text, #222222) 8%, transparent);
+      }
+      .nav.active {
+        color: var(--ui-color-primary-contrast, #ffffff);
+        background: var(--ui-color-primary, #3b5bdb);
+      }
+      .main {
+        max-width: 1000px;
+        padding: 24px 32px 120px;
+      }
+      .lead {
+        max-width: 640px;
+        opacity: 0.75;
+        line-height: 1.5;
+      }
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .code {
+        margin-top: 16px;
+        padding: 12px 16px;
+        overflow: auto;
+        font-size: 12px;
+        line-height: 1.5;
+        border: 1px solid var(--ui-color-border, #dddddd);
+        border-radius: var(--ui-radius, 6px);
+        background: color-mix(
+          in srgb,
+          var(--ui-color-text, #222222) 5%,
+          var(--ui-color-surface, #ffffff)
+        );
+      }
+    `,
+  ],
 })
 export class App {
+  snippets = SNIPPETS;
+  presetNames = Object.keys(PRESETS);
+  pages = [
+    { id: 'overview', label: 'Overview' },
+    { id: 'button', label: 'Button' },
+    { id: 'card', label: 'Card' },
+    { id: 'table', label: 'Table' },
+    { id: 'grid', label: 'Dashboard grid' },
+  ];
+  page = signal('overview');
+
+  applyPreset(name: string) {
+    const tokens = PRESETS[name];
+    for (const [key, value] of Object.entries(tokens)) {
+      document.documentElement.style.setProperty(key, value); // foran screen par
+    }
+    syncTokens(tokens); // aur styles.scss mein (unsaved)
+  }
+
   users = [
     { name: 'Ali', email: 'ali@x.com', role: 'Admin' },
     { name: 'Sara', email: 'sara@x.com', role: 'User' },
@@ -54,6 +293,4 @@ export class App {
     { id: 'users', x: 6, y: 0, w: 6, h: 2 },
     { id: 'orders', x: 0, y: 2, w: 12, h: 2 },
   ];
-
-  output = signal('');
 }

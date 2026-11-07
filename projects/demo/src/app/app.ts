@@ -14,7 +14,7 @@ import {
   TextInput,
   ThemePanel,
   syncTokens,
-} from 'ui-kit';
+} from 'ngx-nudge';
 
 const PRESETS: Record<string, Record<string, string>> = {
   Light: {

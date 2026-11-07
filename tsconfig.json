@@ -15,7 +15,7 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "ui-kit": ["./dist/ui-kit"]
+      "ngx-nudge": ["./dist/ngx-nudge"]
     }
   },
   "angularCompilerOptions": {
@@ -27,10 +27,10 @@
   "files": [],
   "references": [
     {
-      "path": "./projects/ui-kit/tsconfig.lib.json"
+      "path": "./projects/ngx-nudge/tsconfig.lib.json"
     },
     {
-      "path": "./projects/ui-kit/tsconfig.spec.json"
+      "path": "./projects/ngx-nudge/tsconfig.spec.json"
     },
     {
       "path": "./projects/demo/tsconfig.app.json"

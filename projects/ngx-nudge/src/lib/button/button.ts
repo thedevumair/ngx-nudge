@@ -5,12 +5,12 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 
 /**
  * Usage:
- *   <button ui-button>Save</button>
- *   <button ui-button variant="outline" size="sm">Cancel</button>
- *   <a ui-button href="/home">Home</a>
+ *   <button nd-button>Save</button>
+ *   <button nd-button variant="outline" size="sm">Cancel</button>
+ *   <a nd-button href="/home">Home</a>
  */
 @Component({
-  selector: 'button[ui-button], a[ui-button]',
+  selector: 'button[nd-button], a[nd-button]',
   template: '<ng-content />',
   styleUrl: './button.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

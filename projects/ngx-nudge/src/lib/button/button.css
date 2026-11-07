@@ -3,15 +3,15 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: var(--ui-button-pad-y, 8px) var(--ui-button-pad-x, 16px);
+  padding: var(--nd-button-pad-y, 8px) var(--nd-button-pad-x, 16px);
   font: inherit;
-  font-size: var(--ui-button-font-size, var(--ui-font-size, 14px));
+  font-size: var(--nd-button-font-size, var(--nd-font-size, 14px));
   font-weight: 600;
   line-height: 1.25;
-  color: var(--ui-button-color, var(--ui-color-primary-contrast, #ffffff));
-  background: var(--ui-button-bg, var(--ui-color-primary, #3b5bdb));
-  border: 1px solid var(--ui-button-bg, var(--ui-color-primary, #3b5bdb));
-  border-radius: var(--ui-button-radius, var(--ui-radius, 6px));
+  color: var(--nd-button-color, var(--nd-color-primary-contrast, #ffffff));
+  background: var(--nd-button-bg, var(--nd-color-primary, #3b5bdb));
+  border: 1px solid var(--nd-button-bg, var(--nd-color-primary, #3b5bdb));
+  border-radius: var(--nd-button-radius, var(--nd-radius, 6px));
   cursor: pointer;
   text-decoration: none;
   user-select: none;
@@ -23,7 +23,7 @@
 }
 
 :host(:focus-visible) {
-  outline: 2px solid var(--ui-color-focus, #4c8bf5);
+  outline: 2px solid var(--nd-color-focus, #4c8bf5);
   outline-offset: 2px;
 }
 
@@ -34,12 +34,12 @@
 }
 
 :host([data-variant='outline']) {
-  color: var(--ui-button-bg, var(--ui-color-primary, #3b5bdb));
+  color: var(--nd-button-bg, var(--nd-color-primary, #3b5bdb));
   background: transparent;
 }
 
 :host([data-variant='ghost']) {
-  color: var(--ui-button-bg, var(--ui-color-primary, #3b5bdb));
+  color: var(--nd-button-bg, var(--nd-color-primary, #3b5bdb));
   background: transparent;
   border-color: transparent;
 }

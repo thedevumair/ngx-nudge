@@ -21,7 +21,7 @@ export interface GridItem {
 }
 
 @Component({
-  selector: 'ui-grid',
+  selector: 'nd-grid',
   imports: [NgTemplateOutlet],
   templateUrl: './grid.html',
   styleUrl: './grid.css',

@@ -1,8 +1,7 @@
 /*
- * Public API Surface of ui-kit
+ * Public API Surface of nd-kit
  */
 
-export * from './lib/ui-kit';
 export * from './lib/table/table';
 export * from './lib/grid/grid';
 export * from './lib/theme-panel/theme-panel';

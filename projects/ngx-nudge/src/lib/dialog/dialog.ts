@@ -8,20 +8,20 @@ import {
 } from '@angular/core';
 
 /**
- * <ui-dialog [(open)]="show">
- *   <h3 uiDialogTitle>Title</h3>
+ * <nd-dialog [(open)]="show">
+ *   <h3 ndDialogTitle>Title</h3>
  *   Body
- *   <div uiDialogActions><button ui-button>OK</button></div>
- * </ui-dialog>
+ *   <div ndDialogActions><button nd-button>OK</button></div>
+ * </nd-dialog>
  */
 @Component({
-  selector: 'ui-dialog',
+  selector: 'nd-dialog',
   template: `
     <dialog #dlg (close)="open.set(false)" (click)="onBackdrop($event)">
       <div class="panel">
-        <header class="header"><ng-content select="[uiDialogTitle]" /></header>
+        <header class="header"><ng-content select="[ndDialogTitle]" /></header>
         <div class="body"><ng-content /></div>
-        <footer class="footer"><ng-content select="[uiDialogActions]" /></footer>
+        <footer class="footer"><ng-content select="[ndDialogActions]" /></footer>
       </div>
     </dialog>
   `,

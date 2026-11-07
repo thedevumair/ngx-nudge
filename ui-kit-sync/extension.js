@@ -108,7 +108,7 @@ async function applyColumns(id, inputName, value) {
     '**/*.{ts,html}',
     '{**/node_modules/**,**/dist/**,**/.angular/**}',
   );
-  const tagRe = new RegExp(`<ui-[\\w-]+\\b[^>]*\\bsyncId="${id}"[^>]*>`);
+  const tagRe = new RegExp(`<nd-[\\w-]+\\b[^>]*\\bsyncId="${id}"[^>]*>`);
   const bindRe = new RegExp(`\\[${inputName}\\]\\s*=\\s*"\\s*([A-Za-z_$][\\w$]*)\\s*"`);
 
   for (const uri of files) {

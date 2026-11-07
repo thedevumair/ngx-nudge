@@ -18,56 +18,56 @@ import {
 
 const PRESETS: Record<string, Record<string, string>> = {
   Light: {
-    '--ui-color-primary': '#3b5bdb',
-    '--ui-color-primary-contrast': '#ffffff',
-    '--ui-color-surface': '#ffffff',
-    '--ui-color-text': '#222222',
-    '--ui-color-border': '#dddddd',
+    '--nd-color-primary': '#3b5bdb',
+    '--nd-color-primary-contrast': '#ffffff',
+    '--nd-color-surface': '#ffffff',
+    '--nd-color-text': '#222222',
+    '--nd-color-border': '#dddddd',
   },
   Dark: {
-    '--ui-color-primary': '#748ffc',
-    '--ui-color-primary-contrast': '#111827',
-    '--ui-color-surface': '#1b1e27',
-    '--ui-color-text': '#e6e8ee',
-    '--ui-color-border': '#343a4a',
+    '--nd-color-primary': '#748ffc',
+    '--nd-color-primary-contrast': '#111827',
+    '--nd-color-surface': '#1b1e27',
+    '--nd-color-text': '#e6e8ee',
+    '--nd-color-border': '#343a4a',
   },
   Rose: {
-    '--ui-color-primary': '#d6336c',
-    '--ui-color-primary-contrast': '#ffffff',
-    '--ui-color-surface': '#fff7fa',
-    '--ui-color-text': '#3b1f2b',
-    '--ui-color-border': '#f0c9d6',
+    '--nd-color-primary': '#d6336c',
+    '--nd-color-primary-contrast': '#ffffff',
+    '--nd-color-surface': '#fff7fa',
+    '--nd-color-text': '#3b1f2b',
+    '--nd-color-border': '#f0c9d6',
   },
 };
 
 const SNIPPETS = {
-  button: `<button ui-button>Save</button>
-<button ui-button variant="outline" size="sm">Cancel</button>
-<button ui-button variant="ghost" disabled>Disabled</button>`,
-  card: `<ui-card>
-  <h3 uiCardHeader>Title</h3>
+  button: `<button nd-button>Save</button>
+<button nd-button variant="outline" size="sm">Cancel</button>
+<button nd-button variant="ghost" disabled>Disabled</button>`,
+  card: `<nd-card>
+  <h3 ndCardHeader>Title</h3>
   Body content
-  <div uiCardFooter><button ui-button>OK</button></div>
-</ui-card>`,
-  table: `<ui-table syncId="orders" [data]="orders" [columns]="orderColumns" />
+  <div ndCardFooter><button nd-button>OK</button></div>
+</nd-card>`,
+  table: `<nd-table syncId="orders" [data]="orders" [columns]="orderColumns" />
 
 // Resize ya reorder karo: orderColumns array
 // aapki file mein khud badal jata hai (unsaved).`,
-  grid: `<ui-grid syncId="board" [layout]="board">
+  grid: `<nd-grid syncId="board" [layout]="board">
   <ng-template let-w>{{ w.id }}</ng-template>
-</ui-grid>
+</nd-grid>
 
 // Drag ya resize karo: board array khud badalta hai.`,
-  forms: `<input ui-input placeholder="Name" />
-<select ui-select><option>Admin</option></select>
-<ui-badge variant="success">Active</ui-badge>`,
-  dialog: `<ui-dialog [(open)]="show">
-  <h3 uiDialogTitle>Delete user?</h3>
+  forms: `<input nd-input placeholder="Name" />
+<select nd-select><option>Admin</option></select>
+<nd-badge variant="success">Active</nd-badge>`,
+  dialog: `<nd-dialog [(open)]="show">
+  <h3 ndDialogTitle>Delete user?</h3>
   This cannot be undone.
-  <div uiDialogActions>
-    <button ui-button size="sm">Delete</button>
+  <div ndDialogActions>
+    <button nd-button size="sm">Delete</button>
   </div>
-</ui-dialog>`,
+</nd-dialog>`,
 };
 
 @Component({
@@ -80,7 +80,7 @@ const SNIPPETS = {
         <span class="tag">Angular components that update your source</span>
         <div class="presets">
           @for (name of presetNames; track name) {
-            <button ui-button variant="outline" size="sm" (click)="applyPreset(name)">
+            <button nd-button variant="outline" size="sm" (click)="applyPreset(name)">
               {{ name }}
             </button>
           }
@@ -110,21 +110,21 @@ const SNIPPETS = {
               or save it.
             </p>
             <div class="stack">
-              <ui-card>
-                <h3 uiCardHeader>Live source sync</h3>
+              <nd-card>
+                <h3 ndCardHeader>Live source sync</h3>
                 Layout and style changes are written into your own files, in dev mode only.
-              </ui-card>
-              <ui-card>
-                <h3 uiCardHeader>One theme, every component</h3>
+              </nd-card>
+              <nd-card>
+                <h3 ndCardHeader>One theme, every component</h3>
                 Change one token and the whole kit follows. Try the presets at the top.
-              </ui-card>
-              <ui-card>
-                <h3 uiCardHeader>Clean, small API</h3>
+              </nd-card>
+              <nd-card>
+                <h3 ndCardHeader>Clean, small API</h3>
                 Standalone components, signals, plain CSS variables. No modules, no theme files.
-                <div uiCardFooter>
-                  <button ui-button (click)="page.set('table')">See the table</button>
+                <div ndCardFooter>
+                  <button nd-button (click)="page.set('table')">See the table</button>
                 </div>
-              </ui-card>
+              </nd-card>
             </div>
           }
           @case ('demo') {
@@ -132,38 +132,38 @@ const SNIPPETS = {
             <p class="lead">
               Drag a column edge to resize, or drag a header to reorder. Watch your code update.
             </p>
-            <ui-table syncId="orders" [data]="orders" [columns]="orderColumns" />
+            <nd-table syncId="orders" [data]="orders" [columns]="orderColumns" />
             <h3>Overview</h3>
-            <ui-grid syncId="board" [layout]="board" [rowHeight]="70">
+            <nd-grid syncId="board" [layout]="board" [rowHeight]="70">
               <ng-template let-w>
                 <div class="kpi">
                   <span>{{ w.id }}</span>
                   <strong>{{ kpi[w.id] }}</strong>
                 </div>
               </ng-template>
-            </ui-grid>
+            </nd-grid>
           }
           @case ('button') {
             <h1>Button</h1>
             <p class="lead">Three variants and three sizes, driven by theme tokens.</p>
-            <ui-card>
-              <h3 uiCardHeader>Preview</h3>
+            <nd-card>
+              <h3 ndCardHeader>Preview</h3>
               <div class="row">
-                <button ui-button>Save</button>
-                <button ui-button variant="outline" size="sm">Cancel</button>
-                <button ui-button variant="ghost" disabled>Disabled</button>
+                <button nd-button>Save</button>
+                <button nd-button variant="outline" size="sm">Cancel</button>
+                <button nd-button variant="ghost" disabled>Disabled</button>
               </div>
-            </ui-card>
+            </nd-card>
             <pre class="code">{{ snippets.button }}</pre>
           }
           @case ('card') {
             <h1>Card</h1>
             <p class="lead">A surface with optional header and footer slots.</p>
-            <ui-card>
-              <h3 uiCardHeader>Preview</h3>
+            <nd-card>
+              <h3 ndCardHeader>Preview</h3>
               Body content goes here.
-              <div uiCardFooter><button ui-button size="sm">OK</button></div>
-            </ui-card>
+              <div ndCardFooter><button nd-button size="sm">OK</button></div>
+            </nd-card>
             <pre class="code">{{ snippets.card }}</pre>
           }
           @case ('table') {
@@ -173,19 +173,19 @@ const SNIPPETS = {
               <code>app.ts</code>.
             </p>
             <h3>Users</h3>
-            <ui-table syncId="users" [data]="users" [columns]="columns" />
+            <nd-table syncId="users" [data]="users" [columns]="columns" />
             <h3>Admins</h3>
-            <ui-table syncId="admins" [data]="admins" [columns]="adminColumns" />
+            <nd-table syncId="admins" [data]="admins" [columns]="adminColumns" />
             <pre class="code">{{ snippets.table }}</pre>
           }
           @case ('grid') {
             <h1>Dashboard grid</h1>
             <p class="lead">Drag widgets by the bar, resize from the corner.</p>
-            <ui-grid syncId="dash" [layout]="dash">
+            <nd-grid syncId="dash" [layout]="dash">
               <ng-template let-w
                 ><strong>{{ w.id }}</strong> widget</ng-template
               >
-            </ui-grid>
+            </nd-grid>
             <pre class="code">{{ snippets.grid }}</pre>
           }
           @case ('forms') {
@@ -193,27 +193,27 @@ const SNIPPETS = {
             <p class="lead">
               Native elements with kit styling, so keyboard and forms work out of the box.
             </p>
-            <ui-card>
-              <h3 uiCardHeader>Preview</h3>
+            <nd-card>
+              <h3 ndCardHeader>Preview</h3>
               <div class="form">
-                <label>Name <input ui-input placeholder="Your name" /></label>
+                <label>Name <input nd-input placeholder="Your name" /></label>
                 <label>
                   Role
-                  <select ui-select>
+                  <select nd-select>
                     <option>Admin</option>
                     <option>User</option>
                   </select>
                 </label>
-                <label>Invalid <input ui-input aria-invalid="true" value="oops" /></label>
+                <label>Invalid <input nd-input aria-invalid="true" value="oops" /></label>
                 <div class="row">
-                  <ui-badge>Neutral</ui-badge>
-                  <ui-badge variant="primary">Primary</ui-badge>
-                  <ui-badge variant="success">Success</ui-badge>
-                  <ui-badge variant="warning">Warning</ui-badge>
-                  <ui-badge variant="danger">Danger</ui-badge>
+                  <nd-badge>Neutral</nd-badge>
+                  <nd-badge variant="primary">Primary</nd-badge>
+                  <nd-badge variant="success">Success</nd-badge>
+                  <nd-badge variant="warning">Warning</nd-badge>
+                  <nd-badge variant="danger">Danger</nd-badge>
                 </div>
               </div>
-            </ui-card>
+            </nd-card>
             <pre class="code">{{ snippets.forms }}</pre>
           }
           @case ('dialog') {
@@ -221,17 +221,17 @@ const SNIPPETS = {
             <p class="lead">
               Built on the native dialog element: Esc, focus trap and backdrop click included.
             </p>
-            <button ui-button (click)="showDialog.set(true)">Open dialog</button>
-            <ui-dialog [(open)]="showDialog">
-              <h3 uiDialogTitle>Delete user?</h3>
+            <button nd-button (click)="showDialog.set(true)">Open dialog</button>
+            <nd-dialog [(open)]="showDialog">
+              <h3 ndDialogTitle>Delete user?</h3>
               This cannot be undone.
-              <div uiDialogActions>
-                <button ui-button variant="outline" size="sm" (click)="showDialog.set(false)">
+              <div ndDialogActions>
+                <button nd-button variant="outline" size="sm" (click)="showDialog.set(false)">
                   Cancel
                 </button>
-                <button ui-button size="sm" (click)="showDialog.set(false)">Delete</button>
+                <button nd-button size="sm" (click)="showDialog.set(false)">Delete</button>
               </div>
-            </ui-dialog>
+            </nd-dialog>
             <pre class="code">{{ snippets.dialog }}</pre>
           }
           @case ('starter') {
@@ -242,54 +242,54 @@ const SNIPPETS = {
             </p>
             <div class="stats">
               @for (s of stats; track s.label) {
-                <ui-card>
+                <nd-card>
                   <div class="stat">
                     <span>{{ s.label }}</span>
                     <strong>{{ s.value }}</strong>
-                    <ui-badge [variant]="s.variant">{{ s.delta }}</ui-badge>
+                    <nd-badge [variant]="s.variant">{{ s.delta }}</nd-badge>
                   </div>
-                </ui-card>
+                </nd-card>
               }
             </div>
             <div class="starter-head">
               <h3>Team</h3>
-              <button ui-button size="sm" (click)="invite.set(true)">Invite user</button>
+              <button nd-button size="sm" (click)="invite.set(true)">Invite user</button>
             </div>
-            <ui-table syncId="team" [data]="users" [columns]="teamColumns" />
+            <nd-table syncId="team" [data]="users" [columns]="teamColumns" />
 
-            <ui-dialog [(open)]="invite">
-              <h3 uiDialogTitle>Invite user</h3>
+            <nd-dialog [(open)]="invite">
+              <h3 ndDialogTitle>Invite user</h3>
               <div class="form">
-                <ui-field label="Email" hint="We will send an invite link." [required]="true">
-                  <input ui-input type="email" placeholder="name@company.com" />
-                </ui-field>
-                <ui-field label="Role">
-                  <select ui-select>
+                <nd-field label="Email" hint="We will send an invite link." [required]="true">
+                  <input nd-input type="email" placeholder="name@company.com" />
+                </nd-field>
+                <nd-field label="Role">
+                  <select nd-select>
                     <option>Admin</option>
                     <option>User</option>
                   </select>
-                </ui-field>
+                </nd-field>
               </div>
-              <div uiDialogActions>
-                <button ui-button variant="outline" size="sm" (click)="invite.set(false)">
+              <div ndDialogActions>
+                <button nd-button variant="outline" size="sm" (click)="invite.set(false)">
                   Cancel
                 </button>
-                <button ui-button size="sm" (click)="invite.set(false)">Send invite</button>
+                <button nd-button size="sm" (click)="invite.set(false)">Send invite</button>
               </div>
-            </ui-dialog>
+            </nd-dialog>
           }
         }
       </main>
     </div>
-    <ui-theme-panel />
+    <nd-theme-panel />
   `,
   styles: [
     `
       :host {
         display: block;
         min-height: 100vh;
-        color: var(--ui-color-text, #222222);
-        background: var(--ui-color-surface, #ffffff);
+        color: var(--nd-color-text, #222222);
+        background: var(--nd-color-surface, #ffffff);
         font-family: system-ui, sans-serif;
       }
       .kpi {
@@ -315,7 +315,7 @@ const SNIPPETS = {
         align-items: center;
         gap: 16px;
         padding: 12px 24px;
-        border-bottom: 1px solid var(--ui-color-border, #dddddd);
+        border-bottom: 1px solid var(--nd-color-border, #dddddd);
       }
       .tag {
         font-size: 13px;
@@ -331,7 +331,7 @@ const SNIPPETS = {
         flex-direction: column;
         gap: 4px;
         padding: 16px;
-        border-right: 1px solid var(--ui-color-border, #dddddd);
+        border-right: 1px solid var(--nd-color-border, #dddddd);
       }
       .nav {
         padding: 8px 12px;
@@ -340,15 +340,15 @@ const SNIPPETS = {
         color: inherit;
         background: transparent;
         border: 0;
-        border-radius: var(--ui-radius, 6px);
+        border-radius: var(--nd-radius, 6px);
         cursor: pointer;
       }
       .nav:hover {
-        background: color-mix(in srgb, var(--ui-color-text, #222222) 8%, transparent);
+        background: color-mix(in srgb, var(--nd-color-text, #222222) 8%, transparent);
       }
       .nav.active {
-        color: var(--ui-color-primary-contrast, #ffffff);
-        background: var(--ui-color-primary, #3b5bdb);
+        color: var(--nd-color-primary-contrast, #ffffff);
+        background: var(--nd-color-primary, #3b5bdb);
       }
       .main {
         max-width: 1000px;
@@ -375,12 +375,12 @@ const SNIPPETS = {
         overflow: auto;
         font-size: 12px;
         line-height: 1.5;
-        border: 1px solid var(--ui-color-border, #dddddd);
-        border-radius: var(--ui-radius, 6px);
+        border: 1px solid var(--nd-color-border, #dddddd);
+        border-radius: var(--nd-radius, 6px);
         background: color-mix(
           in srgb,
-          var(--ui-color-text, #222222) 5%,
-          var(--ui-color-surface, #ffffff)
+          var(--nd-color-text, #222222) 5%,
+          var(--nd-color-surface, #ffffff)
         );
       }
       .form {
@@ -513,7 +513,7 @@ export class App {
       document.documentElement.style.setProperty(key, value); // foran screen par
     }
     syncTokens(tokens); // aur styles.scss mein (unsaved)
-    window.dispatchEvent(new Event('ui-theme-change')); // panel ke sliders refresh
+    window.dispatchEvent(new Event('nd-theme-change')); // panel ke sliders refresh
   }
 
   users = [

@@ -1,20 +1,20 @@
 .wrap {
   overflow-x: auto;
-  color: var(--ui-table-color, var(--ui-color-text, #222222));
-  background: var(--ui-table-bg, var(--ui-color-surface, #ffffff));
-  border: 1px solid var(--ui-table-border-color, var(--ui-color-border, #dddddd));
-  border-radius: var(--ui-table-radius, var(--ui-radius, 0px));
+  color: var(--nd-table-color, var(--nd-color-text, #222222));
+  background: var(--nd-table-bg, var(--nd-color-surface, #ffffff));
+  border: 1px solid var(--nd-table-border-color, var(--nd-color-border, #dddddd));
+  border-radius: var(--nd-table-radius, var(--nd-radius, 0px));
 }
 table {
   border-collapse: collapse;
   table-layout: fixed;
-  font-size: var(--ui-table-font-size, var(--ui-font-size, 14px));
+  font-size: var(--nd-table-font-size, var(--nd-font-size, 14px));
 }
 th,
 td {
-  padding: var(--ui-table-pad-y, 8px) var(--ui-table-pad-x, 12px);
+  padding: var(--nd-table-pad-y, 8px) var(--nd-table-pad-x, 12px);
   text-align: left;
-  border-bottom: 1px solid var(--ui-table-border-color, var(--ui-color-border, #dddddd));
+  border-bottom: 1px solid var(--nd-table-border-color, var(--nd-color-border, #dddddd));
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -22,16 +22,16 @@ th {
   position: relative;
   cursor: grab;
   user-select: none;
-  color: var(--ui-table-header-color, var(--ui-color-text, #222222));
+  color: var(--nd-table-header-color, var(--nd-color-text, #222222));
   background: var(
-    --ui-table-header-bg,
-    color-mix(in srgb, var(--ui-color-text, #222222) 6%, var(--ui-color-surface, #ffffff))
+    --nd-table-header-bg,
+    color-mix(in srgb, var(--nd-color-text, #222222) 6%, var(--nd-color-surface, #ffffff))
   );
 }
 tbody tr:nth-child(even) {
   background: var(
-    --ui-table-stripe-bg,
-    color-mix(in srgb, var(--ui-color-text, #222222) 4%, transparent)
+    --nd-table-stripe-bg,
+    color-mix(in srgb, var(--nd-color-text, #222222) 4%, transparent)
   );
 }
 th button {
@@ -57,7 +57,7 @@ th.drag-over {
   touch-action: none;
 }
 .resizer:hover {
-  background: var(--ui-color-primary, #4c8bf5);
+  background: var(--nd-color-primary, #4c8bf5);
 }
 .pager {
   display: flex;

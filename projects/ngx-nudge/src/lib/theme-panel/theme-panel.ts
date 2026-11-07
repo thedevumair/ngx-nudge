@@ -15,29 +15,29 @@ export const TOKENS: ThemeToken[] = [
   // Global: ye badlo to poori kit badle
   {
     group: 'Global',
-    name: '--ui-color-primary',
+    name: '--nd-color-primary',
     label: 'Primary colour',
     type: 'color',
     default: '#3b5bdb',
   },
   {
     group: 'Global',
-    name: '--ui-color-surface',
+    name: '--nd-color-surface',
     label: 'Surface',
     type: 'color',
     default: '#ffffff',
   },
-  { group: 'Global', name: '--ui-color-text', label: 'Text', type: 'color', default: '#222222' },
+  { group: 'Global', name: '--nd-color-text', label: 'Text', type: 'color', default: '#222222' },
   {
     group: 'Global',
-    name: '--ui-color-border',
+    name: '--nd-color-border',
     label: 'Border',
     type: 'color',
     default: '#dddddd',
   },
   {
     group: 'Global',
-    name: '--ui-radius',
+    name: '--nd-radius',
     label: 'Corner radius',
     type: 'px',
     default: '6px',
@@ -46,7 +46,7 @@ export const TOKENS: ThemeToken[] = [
   },
   {
     group: 'Global',
-    name: '--ui-font-size',
+    name: '--nd-font-size',
     label: 'Font size',
     type: 'px',
     default: '14px',
@@ -57,7 +57,7 @@ export const TOKENS: ThemeToken[] = [
   // Button
   {
     group: 'Button',
-    name: '--ui-button-pad-y',
+    name: '--nd-button-pad-y',
     label: 'Padding vertical',
     type: 'px',
     default: '8px',
@@ -66,7 +66,7 @@ export const TOKENS: ThemeToken[] = [
   },
   {
     group: 'Button',
-    name: '--ui-button-pad-x',
+    name: '--nd-button-pad-x',
     label: 'Padding horizontal',
     type: 'px',
     default: '16px',
@@ -77,7 +77,7 @@ export const TOKENS: ThemeToken[] = [
   // Card
   {
     group: 'Card',
-    name: '--ui-card-pad',
+    name: '--nd-card-pad',
     label: 'Padding',
     type: 'px',
     default: '16px',
@@ -88,28 +88,28 @@ export const TOKENS: ThemeToken[] = [
   // Table
   {
     group: 'Table',
-    name: '--ui-table-header-bg',
+    name: '--nd-table-header-bg',
     label: 'Header background',
     type: 'color',
     default: '#f5f5f5',
   },
   {
     group: 'Table',
-    name: '--ui-table-header-color',
+    name: '--nd-table-header-color',
     label: 'Header text',
     type: 'color',
     default: '#222222',
   },
   {
     group: 'Table',
-    name: '--ui-table-stripe-bg',
+    name: '--nd-table-stripe-bg',
     label: 'Row stripe',
     type: 'color',
     default: '#fafafa',
   },
   {
     group: 'Table',
-    name: '--ui-table-pad-y',
+    name: '--nd-table-pad-y',
     label: 'Padding vertical',
     type: 'px',
     default: '8px',
@@ -118,7 +118,7 @@ export const TOKENS: ThemeToken[] = [
   },
   {
     group: 'Table',
-    name: '--ui-table-pad-x',
+    name: '--nd-table-pad-x',
     label: 'Padding horizontal',
     type: 'px',
     default: '12px',
@@ -128,7 +128,7 @@ export const TOKENS: ThemeToken[] = [
 ];
 
 @Component({
-  selector: 'ui-theme-panel',
+  selector: 'nd-theme-panel',
   template: `
     @if (dev) {
       <div class="panel">
@@ -211,7 +211,7 @@ export const TOKENS: ThemeToken[] = [
       }
     `,
   ],
-  host: { '(window:ui-theme-change)': 'refresh()' },
+  host: { '(window:nd-theme-change)': 'refresh()' },
 })
 export class ThemePanel {
   dev = isDevMode();

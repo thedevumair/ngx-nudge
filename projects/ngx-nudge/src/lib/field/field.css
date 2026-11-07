@@ -11,7 +11,7 @@
 }
 .req {
   margin-left: 2px;
-  color: var(--ui-color-danger, #e03131);
+  color: var(--nd-color-danger, #e03131);
 }
 .msg {
   margin: 4px 0 0;
@@ -19,6 +19,6 @@
   opacity: 0.7;
 }
 .msg.error {
-  color: var(--ui-color-danger, #e03131);
+  color: var(--nd-color-danger, #e03131);
   opacity: 1;
 }

@@ -10,10 +10,10 @@ dialog::backdrop {
 }
 
 .panel {
-  color: var(--ui-color-text, #222222);
-  background: var(--ui-color-surface, #ffffff);
-  border: 1px solid var(--ui-color-border, #dddddd);
-  border-radius: var(--ui-radius, 6px);
+  color: var(--nd-color-text, #222222);
+  background: var(--nd-color-surface, #ffffff);
+  border: 1px solid var(--nd-color-border, #dddddd);
+  border-radius: var(--nd-radius, 6px);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
@@ -24,13 +24,13 @@ dialog::backdrop {
 }
 .header {
   font-weight: 600;
-  border-bottom: 1px solid var(--ui-color-border, #dddddd);
+  border-bottom: 1px solid var(--nd-color-border, #dddddd);
 }
 .footer {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  border-top: 1px solid var(--ui-color-border, #dddddd);
+  border-top: 1px solid var(--nd-color-border, #dddddd);
 }
 .header:empty,
 .footer:empty {

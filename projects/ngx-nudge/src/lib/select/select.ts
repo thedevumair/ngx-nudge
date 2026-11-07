@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-/** <select ui-select><option>Admin</option></select> */
+/** <select nd-select><option>Admin</option></select> */
 @Component({
-  selector: 'select[ui-select]',
+  selector: 'select[nd-select]',
   template: '<ng-content />', // options project hote hain, isliye zaroori
   styleUrl: './select.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

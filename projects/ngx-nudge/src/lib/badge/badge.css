@@ -1,5 +1,5 @@
 :host {
-  --_c: var(--ui-color-text, #222222);
+  --_c: var(--nd-color-text, #222222);
   display: inline-flex;
   align-items: center;
   padding: 2px 10px;
@@ -11,14 +11,14 @@
   border-radius: 999px;
 }
 :host([data-variant='primary']) {
-  --_c: var(--ui-color-primary, #3b5bdb);
+  --_c: var(--nd-color-primary, #3b5bdb);
 }
 :host([data-variant='success']) {
-  --_c: var(--ui-color-success, #2f9e44);
+  --_c: var(--nd-color-success, #2f9e44);
 }
 :host([data-variant='warning']) {
-  --_c: var(--ui-color-warning, #e67700);
+  --_c: var(--nd-color-warning, #e67700);
 }
 :host([data-variant='danger']) {
-  --_c: var(--ui-color-danger, #e03131);
+  --_c: var(--nd-color-danger, #e03131);
 }

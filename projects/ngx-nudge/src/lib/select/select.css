@@ -2,24 +2,24 @@
   display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: var(--ui-input-pad-y, 8px) var(--ui-input-pad-x, 12px);
+  padding: var(--nd-input-pad-y, 8px) var(--nd-input-pad-x, 12px);
   font: inherit;
-  font-size: var(--ui-input-font-size, var(--ui-font-size, 14px));
-  color: var(--ui-input-color, var(--ui-color-text, #222222));
-  background: var(--ui-input-bg, var(--ui-color-surface, #ffffff));
-  border: 1px solid var(--ui-input-border-color, var(--ui-color-border, #dddddd));
-  border-radius: var(--ui-input-radius, var(--ui-radius, 6px));
+  font-size: var(--nd-input-font-size, var(--nd-font-size, 14px));
+  color: var(--nd-input-color, var(--nd-color-text, #222222));
+  background: var(--nd-input-bg, var(--nd-color-surface, #ffffff));
+  border: 1px solid var(--nd-input-border-color, var(--nd-color-border, #dddddd));
+  border-radius: var(--nd-input-radius, var(--nd-radius, 6px));
   cursor: pointer;
 }
 :host(:focus) {
-  outline: 2px solid var(--ui-color-focus, #4c8bf5);
+  outline: 2px solid var(--nd-color-focus, #4c8bf5);
   outline-offset: 1px;
-  border-color: var(--ui-color-primary, #3b5bdb);
+  border-color: var(--nd-color-primary, #3b5bdb);
 }
 :host(:disabled) {
   opacity: 0.5;
   cursor: not-allowed;
 }
 :host([aria-invalid='true']) {
-  border-color: var(--ui-color-danger, #e03131);
+  border-color: var(--nd-color-danger, #e03131);
 }

@@ -5,18 +5,18 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  color: var(--ui-color-text, #222222);
-  background: var(--ui-grid-cell-bg, var(--ui-color-surface, #ffffff));
-  border: 1px solid var(--ui-color-border, #dddddd);
-  border-radius: var(--ui-radius, 6px);
+  color: var(--nd-color-text, #222222);
+  background: var(--nd-grid-cell-bg, var(--nd-color-surface, #ffffff));
+  border: 1px solid var(--nd-color-border, #dddddd);
+  border-radius: var(--nd-radius, 6px);
   overflow: hidden;
 }
 .bar {
   padding: 4px 8px;
   background: color-mix(
     in srgb,
-    var(--ui-color-text, #222222) 8%,
-    var(--ui-color-surface, #ffffff)
+    var(--nd-color-text, #222222) 8%,
+    var(--nd-color-surface, #ffffff)
   );
   font-size: 12px;
   cursor: grab;
@@ -36,5 +36,5 @@
   height: 16px;
   cursor: nwse-resize;
   touch-action: none;
-  background: linear-gradient(135deg, transparent 50%, var(--ui-color-primary, #4c8bf5) 50%);
+  background: linear-gradient(135deg, transparent 50%, var(--nd-color-primary, #4c8bf5) 50%);
 }

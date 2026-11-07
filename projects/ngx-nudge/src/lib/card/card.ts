@@ -2,18 +2,18 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 /**
  * Usage:
- *   <ui-card>
- *     <h3 uiCardHeader>Title</h3>
+ *   <nd-card>
+ *     <h3 ndCardHeader>Title</h3>
  *     Body content
- *     <div uiCardFooter><button ui-button>OK</button></div>
- *   </ui-card>
+ *     <div ndCardFooter><button nd-button>OK</button></div>
+ *   </nd-card>
  */
 @Component({
-  selector: 'ui-card',
+  selector: 'nd-card',
   template: `
-    <header class="header"><ng-content select="[uiCardHeader]" /></header>
+    <header class="header"><ng-content select="[ndCardHeader]" /></header>
     <div class="body"><ng-content /></div>
-    <footer class="footer"><ng-content select="[uiCardFooter]" /></footer>
+    <footer class="footer"><ng-content select="[ndCardFooter]" /></footer>
   `,
   styleUrl: './card.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

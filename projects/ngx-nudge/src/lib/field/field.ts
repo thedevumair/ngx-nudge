@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 /**
- * <ui-field label="Email" hint="We will send a link" [required]="true">
- *   <input ui-input type="email" />
- * </ui-field>
+ * <nd-field label="Email" hint="We will send a link" [required]="true">
+ *   <input nd-input type="email" />
+ * </nd-field>
  *
  * Error dikhane ke liye: error="Invalid email" aur control par aria-invalid="true".
  */
 @Component({
-  selector: 'ui-field',
+  selector: 'nd-field',
   template: `
     <label class="field">
       <span class="label">

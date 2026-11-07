@@ -9,7 +9,7 @@ export interface Column {
 }
 
 @Component({
-  selector: 'ui-table',
+  selector: 'nd-table',
   imports: [],
   templateUrl: './table.html',
   styleUrl: './table.css',

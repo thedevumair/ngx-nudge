@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 export type BadgeVariant = 'neutral' | 'primary' | 'success' | 'warning' | 'danger';
 
-/** <ui-badge variant="success">Active</ui-badge> */
+/** <nd-badge variant="success">Active</nd-badge> */
 @Component({
-  selector: 'ui-badge',
+  selector: 'nd-badge',
   template: '<ng-content />',
   styleUrl: './badge.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

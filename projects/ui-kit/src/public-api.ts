@@ -13,3 +13,4 @@ export * from './lib/badge/badge';
 export * from './lib/input/input';
 export * from './lib/select/select';
 export * from './lib/dialog/dialog';
+export * from './lib/field/field';

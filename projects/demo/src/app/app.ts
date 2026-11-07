@@ -1,10 +1,12 @@
 import { Component, signal } from '@angular/core';
 import {
   Badge,
+  BadgeVariant,
   Button,
   Card,
   Column,
   Dialog,
+  Field,
   Grid,
   GridItem,
   Select,
@@ -70,7 +72,7 @@ const SNIPPETS = {
 
 @Component({
   selector: 'app-root',
-  imports: [Table, Grid, ThemePanel, Card, Button, Badge, TextInput, Select, Dialog],
+  imports: [Table, Grid, ThemePanel, Card, Button, Badge, TextInput, Select, Dialog, Field],
   template: `
     <div class="shell">
       <header class="top">
@@ -124,6 +126,22 @@ const SNIPPETS = {
                 </div>
               </ui-card>
             </div>
+          }
+          @case ('demo') {
+            <h1>Orders</h1>
+            <p class="lead">
+              Drag a column edge to resize, or drag a header to reorder. Watch your code update.
+            </p>
+            <ui-table syncId="orders" [data]="orders" [columns]="orderColumns" />
+            <h3>Overview</h3>
+            <ui-grid syncId="board" [layout]="board" [rowHeight]="70">
+              <ng-template let-w>
+                <div class="kpi">
+                  <span>{{ w.id }}</span>
+                  <strong>{{ kpi[w.id] }}</strong>
+                </div>
+              </ng-template>
+            </ui-grid>
           }
           @case ('button') {
             <h1>Button</h1>
@@ -216,6 +234,50 @@ const SNIPPETS = {
             </ui-dialog>
             <pre class="code">{{ snippets.dialog }}</pre>
           }
+          @case ('starter') {
+            <h1>Admin starter</h1>
+            <p class="lead">
+              A small admin screen built only from kit components. Resize a column or switch a
+              preset.
+            </p>
+            <div class="stats">
+              @for (s of stats; track s.label) {
+                <ui-card>
+                  <div class="stat">
+                    <span>{{ s.label }}</span>
+                    <strong>{{ s.value }}</strong>
+                    <ui-badge [variant]="s.variant">{{ s.delta }}</ui-badge>
+                  </div>
+                </ui-card>
+              }
+            </div>
+            <div class="starter-head">
+              <h3>Team</h3>
+              <button ui-button size="sm" (click)="invite.set(true)">Invite user</button>
+            </div>
+            <ui-table syncId="team" [data]="users" [columns]="teamColumns" />
+
+            <ui-dialog [(open)]="invite">
+              <h3 uiDialogTitle>Invite user</h3>
+              <div class="form">
+                <ui-field label="Email" hint="We will send an invite link." [required]="true">
+                  <input ui-input type="email" placeholder="name@company.com" />
+                </ui-field>
+                <ui-field label="Role">
+                  <select ui-select>
+                    <option>Admin</option>
+                    <option>User</option>
+                  </select>
+                </ui-field>
+              </div>
+              <div uiDialogActions>
+                <button ui-button variant="outline" size="sm" (click)="invite.set(false)">
+                  Cancel
+                </button>
+                <button ui-button size="sm" (click)="invite.set(false)">Send invite</button>
+              </div>
+            </ui-dialog>
+          }
         }
       </main>
     </div>
@@ -229,6 +291,17 @@ const SNIPPETS = {
         color: var(--ui-color-text, #222222);
         background: var(--ui-color-surface, #ffffff);
         font-family: system-ui, sans-serif;
+      }
+      .kpi {
+        display: grid;
+        gap: 4px;
+      }
+      .kpi span {
+        font-size: 12px;
+        opacity: 0.6;
+      }
+      .kpi strong {
+        font-size: 22px;
       }
       .shell {
         display: grid;
@@ -320,6 +393,24 @@ const SNIPPETS = {
         gap: 4px;
         font-size: 13px;
       }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+      .stat {
+        display: grid;
+        gap: 4px;
+      }
+      .stat strong {
+        font-size: 24px;
+      }
+      .starter-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 24px 0 8px;
+      }
     `,
   ],
 })
@@ -327,6 +418,7 @@ export class App {
   snippets = SNIPPETS;
   presetNames = Object.keys(PRESETS);
   pages = [
+    { id: 'demo', label: 'Orders demo' },
     { id: 'overview', label: 'Overview' },
     { id: 'button', label: 'Button' },
     { id: 'card', label: 'Card' },
@@ -334,9 +426,86 @@ export class App {
     { id: 'grid', label: 'Dashboard grid' },
     { id: 'forms', label: 'Inputs & badge' },
     { id: 'dialog', label: 'Dialog' },
+    { id: 'starter', label: 'Admin starter' },
   ];
-  page = signal('overview');
+  page = signal('demo');
   showDialog = signal(false);
+  invite = signal(false);
+  kpi: Record<string, string> = {
+    Revenue: 'Rs 1.24M',
+    Orders: '1,284',
+    Refunds: '1.8%',
+  };
+
+  orders = [
+    {
+      order: '#10482',
+      customer: 'Ayesha Khan',
+      status: 'Delivered',
+      amount: 'Rs 12,400',
+      date: '04 Nov 2026',
+    },
+    {
+      order: '#10481',
+      customer: 'Bilal Ahmed',
+      status: 'Shipped',
+      amount: 'Rs 8,250',
+      date: '04 Nov 2026',
+    },
+    {
+      order: '#10480',
+      customer: 'Sana Malik',
+      status: 'Processing',
+      amount: 'Rs 21,990',
+      date: '03 Nov 2026',
+    },
+    {
+      order: '#10479',
+      customer: 'Hamza Sheikh',
+      status: 'Delivered',
+      amount: 'Rs 3,600',
+      date: '03 Nov 2026',
+    },
+    {
+      order: '#10478',
+      customer: 'Fatima Noor',
+      status: 'Cancelled',
+      amount: 'Rs 5,150',
+      date: '02 Nov 2026',
+    },
+    {
+      order: '#10477',
+      customer: 'Usman Raza',
+      status: 'Delivered',
+      amount: 'Rs 14,800',
+      date: '02 Nov 2026',
+    },
+  ];
+
+  orderColumns: Column[] = [
+    { key: 'order', label: 'Order', width: 110 },
+    { key: 'status', label: 'Status', width: 247 },
+    { key: 'customer', label: 'Customer', width: 220 },
+    { key: 'amount', label: 'Amount', width: 140 },
+    { key: 'date', label: 'Date', width: 353 },
+  ];
+
+  board: GridItem[] = [
+    { id: 'Revenue', x: 0, y: 0, w: 5, h: 2 },
+    { id: 'Orders', x: 6, y: 0, w: 3, h: 2 },
+    { id: 'Refunds', x: 9, y: 0, w: 3, h: 2 },
+  ];
+  stats: { label: string; value: string; delta: string; variant: BadgeVariant }[] = [
+    { label: 'Revenue', value: 'Rs 1.2M', delta: '+12%', variant: 'success' },
+    { label: 'Active users', value: '3,482', delta: '+4%', variant: 'primary' },
+    { label: 'Open tickets', value: '27', delta: '-8%', variant: 'warning' },
+  ];
+
+  teamColumns: Column[] = [
+    { key: 'name', width: 200 },
+    { key: 'email', width: 300 },
+    { key: 'role', width: 150 },
+  ];
 
   applyPreset(name: string) {
     const tokens = PRESETS[name];
@@ -344,6 +513,7 @@ export class App {
       document.documentElement.style.setProperty(key, value); // foran screen par
     }
     syncTokens(tokens); // aur styles.scss mein (unsaved)
+    window.dispatchEvent(new Event('ui-theme-change')); // panel ke sliders refresh
   }
 
   users = [

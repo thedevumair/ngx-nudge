@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+.field {
+  display: grid;
+  gap: 4px;
+}
+.label {
+  font-size: 13px;
+  font-weight: 600;
+}
+.req {
+  margin-left: 2px;
+  color: var(--ui-color-danger, #e03131);
+}
+.msg {
+  margin: 4px 0 0;
+  font-size: 12px;
+  opacity: 0.7;
+}
+.msg.error {
+  color: var(--ui-color-danger, #e03131);
+  opacity: 1;
+}

@@ -211,12 +211,17 @@ export const TOKENS: ThemeToken[] = [
       }
     `,
   ],
+  host: { '(window:ui-theme-change)': 'refresh()' },
 })
 export class ThemePanel {
   dev = isDevMode();
   tokens = TOKENS;
   open = signal(true);
   values = signal<Record<string, string>>(this.read());
+
+  refresh() {
+    this.values.set(this.read());
+  }
 
   private read() {
     const cs = getComputedStyle(document.documentElement);

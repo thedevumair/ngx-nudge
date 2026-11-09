@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
  *   <input nd-input type="email" />
  * </nd-field>
  *
- * Error dikhane ke liye: error="Invalid email" aur control par aria-invalid="true".
+ * To show an error: error="Invalid email" and aria-invalid="true" on the control.
  */
 @Component({
   selector: 'nd-field',

@@ -14,10 +14,10 @@ import { syncToSource } from '../core/sync';
 
 export interface GridItem {
   id: string;
-  x: number; // column (0 se shuru)
-  y: number; // row (0 se shuru)
-  w: number; // kitne columns chaura
-  h: number; // kitni rows ooncha
+  x: number; // column (0-based)
+  y: number; // row (0-based)
+  w: number; // width in columns
+  h: number; // height in rows
 }
 
 @Component({

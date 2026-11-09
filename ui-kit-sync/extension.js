@@ -59,10 +59,10 @@ async function applyTokens(tokens) {
   const edit = new vscode.WorkspaceEdit();
   const pending = new Map(Object.entries(tokens));
 
-  // 1) Jahan variable pehle se likha hai, wahin value badlo
+  // 1) Where the variable already exists, update its value in place
   for (const uri of files) {
     if (!pending.size) break;
-    const doc = await vscode.workspace.openTextDocument(uri); // unsaved content bhi milta hai
+    const doc = await vscode.workspace.openTextDocument(uri); // also returns unsaved content
     const text = doc.getText();
     for (const [name, value] of [...pending]) {
       const m = new RegExp(`(${esc(name)}\\s*:\\s*)([^;}]+)`).exec(text);
@@ -77,7 +77,7 @@ async function applyTokens(tokens) {
     }
   }
 
-  // 2) Jo kahin nahi mila, global styles file ke :root mein daalo
+  // 2) Anything not found goes into the global styles file's :root
   if (pending.size) {
     const globals = await vscode.workspace.findFiles(
       '**/styles.{scss,css}',
@@ -97,7 +97,7 @@ async function applyTokens(tokens) {
     }
   }
 
-  await vscode.workspace.applyEdit(edit); // save nahi karta
+  await vscode.workspace.applyEdit(edit); // does not save
   vscode.window.setStatusBarMessage('UI Kit Sync: styles updated (unsaved)', 2500);
   return true;
 }
@@ -120,7 +120,7 @@ async function applyColumns(id, inputName, value) {
     if (!bind) continue;
     const propName = bind[1];
 
-    // inline template: isi .ts file mein; alag template: usi naam ki .ts file
+    // inline template: same .ts file; external template: the .ts file with the same name
     const ownerPath = uri.fsPath.endsWith('.html')
       ? uri.fsPath.replace(/\.html$/, '.ts')
       : uri.fsPath;
@@ -133,7 +133,7 @@ async function applyColumns(id, inputName, value) {
 }
 
 async function replaceProperty(ts, uri, prop, value) {
-  const doc = await vscode.workspace.openTextDocument(uri); // unsaved content bhi milta hai
+  const doc = await vscode.workspace.openTextDocument(uri); // also returns unsaved content
   const text = doc.getText();
   const sf = ts.createSourceFile(uri.fsPath, text, ts.ScriptTarget.Latest, true);
 
@@ -159,7 +159,7 @@ async function replaceProperty(ts, uri, prop, value) {
   const indent = text.slice(lineStart).match(/^[ \t]*/)[0];
 
   const lines = value.map((c) => {
-    const { order, ...rest } = c; // array ki position hi order hai
+    const { order, ...rest } = c; // the array position is the order
     const props = Object.entries(rest)
       .map(([k, v]) => `${k}: ${typeof v === 'string' ? `'${v.replace(/'/g, "\\'")}'` : v}`)
       .join(', ');
@@ -173,7 +173,7 @@ async function replaceProperty(ts, uri, prop, value) {
     new vscode.Range(doc.positionAt(init.getStart(sf)), doc.positionAt(init.getEnd())),
     newText,
   );
-  await vscode.workspace.applyEdit(edit); // save nahi karta
+  await vscode.workspace.applyEdit(edit); // does not save
   await vscode.window.showTextDocument(doc, { preview: false, preserveFocus: true });
   return true;
 }

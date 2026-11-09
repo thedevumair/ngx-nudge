@@ -43,7 +43,7 @@ export class Dialog {
   }
 
   onBackdrop(e: MouseEvent) {
-    // backdrop par click ka target dialog khud hota hai, andar ka panel nahi
+    // a backdrop click targets the dialog itself, not the inner panel
     if (e.target === this.dlg()?.nativeElement) this.open.set(false);
   }
 }

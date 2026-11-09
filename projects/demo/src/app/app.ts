@@ -51,13 +51,13 @@ const SNIPPETS = {
 </nd-card>`,
   table: `<nd-table syncId="orders" [data]="orders" [columns]="orderColumns" />
 
-// Resize ya reorder karo: orderColumns array
-// aapki file mein khud badal jata hai (unsaved).`,
+// Resize or reorder: the orderColumns array
+// updates itself in your file (unsaved).`,
   grid: `<nd-grid syncId="board" [layout]="board">
   <ng-template let-w>{{ w.id }}</ng-template>
 </nd-grid>
 
-// Drag ya resize karo: board array khud badalta hai.`,
+// Drag or resize: the board array updates itself.`,
   forms: `<input nd-input placeholder="Name" />
 <select nd-select><option>Admin</option></select>
 <nd-badge variant="success">Active</nd-badge>`,
@@ -510,10 +510,10 @@ export class App {
   applyPreset(name: string) {
     const tokens = PRESETS[name];
     for (const [key, value] of Object.entries(tokens)) {
-      document.documentElement.style.setProperty(key, value); // foran screen par
+      document.documentElement.style.setProperty(key, value); // apply to the screen immediately
     }
-    syncTokens(tokens); // aur styles.scss mein (unsaved)
-    window.dispatchEvent(new Event('nd-theme-change')); // panel ke sliders refresh
+    syncTokens(tokens); // and to styles.scss (unsaved)
+    window.dispatchEvent(new Event('nd-theme-change')); // refresh the theme panel sliders
   }
 
   users = [

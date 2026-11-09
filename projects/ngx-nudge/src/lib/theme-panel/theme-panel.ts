@@ -12,7 +12,7 @@ export interface ThemeToken {
 }
 
 export const TOKENS: ThemeToken[] = [
-  // Global: ye badlo to poori kit badle
+  // Global: change these and the whole kit follows
   {
     group: 'Global',
     name: '--nd-color-primary',
@@ -244,8 +244,8 @@ export class ThemePanel {
   }
 
   set(t: ThemeToken, value: string) {
-    document.documentElement.style.setProperty(t.name, value); // foran screen par
+    document.documentElement.style.setProperty(t.name, value); // apply to the screen immediately
     this.values.update((v) => ({ ...v, [t.name]: value }));
-    syncTokens({ [t.name]: value }); // aur scss file mein (debounced)
+    syncTokens({ [t.name]: value }); // and write to the scss file (debounced)
   }
 }

@@ -11,7 +11,7 @@ function post(path: string, body: unknown): void {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
-  }).catch(() => {}); // extension na chal rahi ho to chup rahe
+  }).catch(() => {}); // stay silent if the extension is not running
 }
 
 function debounce(key: string, ms: number, fn: () => void): void {
@@ -19,13 +19,13 @@ function debounce(key: string, ms: number, fn: () => void): void {
   timers.set(key, setTimeout(fn, ms));
 }
 
-/** Component ka config (columns, layout...) developer ki source file mein likhwata hai. Sirf dev mode. */
+/** Writes a component's config (columns, layout, ...) into the developer's source file. Dev mode only. */
 export function syncToSource(id: string | undefined, prop: string, value: unknown): void {
   if (!id || !isDevMode()) return;
   debounce(`${id}:${prop}`, DEBOUNCE_MS.source, () => post('/columns', { id, prop, value }));
 }
 
-/** CSS variables ko developer ki scss/css file mein likhwata hai. Sirf dev mode. */
+/** Writes CSS variables into the developer's scss/css file. Dev mode only. */
 export function syncTokens(tokens: Record<string, string>): void {
   if (!isDevMode()) return;
   Object.assign(tokenBuffer, tokens);

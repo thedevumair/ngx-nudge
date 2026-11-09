@@ -20,14 +20,14 @@ export class Table<T extends Record<string, any>> {
   pageSize = input(10);
   syncId = input<string>();
 
-  // Layout badalne par naya config bahar nikalta hai
+  // Emits the new config whenever the layout changes
   columnsChange = output<Column[]>();
 
   sortKey = signal<string | null>(null);
   sortDir = signal<'asc' | 'desc'>('asc');
   page = signal(0);
 
-  // Asal layout state: input se banti hai, resize/reorder se badalti hai
+  // Source-of-truth layout: derived from the input, updated by resize and reorder
   layout = linkedSignal<Column[]>(() => {
     const raw = this.columns() ?? Object.keys(this.data()[0] ?? {});
     return raw

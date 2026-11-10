@@ -1,0 +1,15 @@
+<app-doc-page
+  heading="Dialog"
+  lead="Built on the native dialog element: Esc, focus trap and backdrop click included."
+>
+  <div><button nd-button (click)="open.set(true)">Open dialog</button></div>
+  <nd-dialog [(open)]="open">
+    <h3 ndDialogTitle>Delete user?</h3>
+    This cannot be undone.
+    <div ndDialogActions>
+      <button nd-button variant="outline" size="sm" (click)="open.set(false)">Cancel</button>
+      <button nd-button size="sm" (click)="open.set(false)">Delete</button>
+    </div>
+  </nd-dialog>
+  <app-code-block [code]="code" />
+</app-doc-page>

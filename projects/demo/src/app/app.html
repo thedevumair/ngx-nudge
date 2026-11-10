@@ -1,9 +1,20 @@
 <div class="shell">
   <nav class="side">
     <strong class="brand">ngx-nudge</strong>
-    @for (link of links; track link.path) {
-      <a [routerLink]="link.path" routerLinkActive="active">{{ link.label }}</a>
+    @for (section of nav; track section.group) {
+      <span class="group">{{ section.group }}</span>
+      @for (link of section.links; track link.path) {
+        <a [routerLink]="link.path" routerLinkActive="active">{{ link.label }}</a>
+      }
     }
+    <span class="group">Theme</span>
+    <div class="presets">
+      @for (name of theme.presetNames; track name) {
+        <button nd-button variant="outline" size="sm" (click)="theme.apply(name)">
+          {{ name }}
+        </button>
+      }
+    </div>
   </nav>
   <main class="main"><router-outlet /></main>
 </div>

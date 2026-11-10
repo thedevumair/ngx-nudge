@@ -1,0 +1,30 @@
+<app-doc-page
+  heading="Inputs, field & badge"
+  lead="Native elements with kit styling, so keyboard and forms work out of the box."
+>
+  <nd-card>
+    <h3 ndCardHeader>Preview</h3>
+    <div class="form">
+      <nd-field label="Email" hint="We will send an invite link." [required]="true">
+        <input nd-input type="email" placeholder="name@company.com" />
+      </nd-field>
+      <nd-field label="Role">
+        <select nd-select>
+          <option>Admin</option>
+          <option>User</option>
+        </select>
+      </nd-field>
+      <nd-field label="Invalid" error="This value is not valid">
+        <input nd-input aria-invalid="true" value="oops" />
+      </nd-field>
+      <div class="row">
+        <nd-badge>Neutral</nd-badge>
+        <nd-badge variant="primary">Primary</nd-badge>
+        <nd-badge variant="success">Success</nd-badge>
+        <nd-badge variant="warning">Warning</nd-badge>
+        <nd-badge variant="danger">Danger</nd-badge>
+      </div>
+    </div>
+  </nd-card>
+  <app-code-block [code]="code" />
+</app-doc-page>

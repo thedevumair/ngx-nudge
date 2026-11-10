@@ -1,0 +1,37 @@
+<app-doc-page heading="Admin starter" lead="A small admin screen built only from kit components.">
+  <div class="stats">
+    @for (s of stats(); track s[0]) {
+      <nd-card>
+        <div class="stat">
+          <span>{{ s[0] }}</span>
+          <strong>{{ s[1] }}</strong>
+        </div>
+      </nd-card>
+    }
+  </div>
+
+  <div class="head">
+    <h3>Team</h3>
+    <button nd-button size="sm" (click)="invite.set(true)">Invite user</button>
+  </div>
+  <nd-table syncId="starter-team" [data]="users()" [columns]="teamColumns" />
+
+  <nd-dialog [(open)]="invite">
+    <h3 ndDialogTitle>Invite user</h3>
+    <div class="form">
+      <nd-field label="Email" hint="We will send an invite link." [required]="true">
+        <input nd-input type="email" placeholder="name@company.com" />
+      </nd-field>
+      <nd-field label="Role">
+        <select nd-select>
+          <option>Admin</option>
+          <option>User</option>
+        </select>
+      </nd-field>
+    </div>
+    <div ndDialogActions>
+      <button nd-button variant="outline" size="sm" (click)="invite.set(false)">Cancel</button>
+      <button nd-button size="sm" (click)="invite.set(false)">Send invite</button>
+    </div>
+  </nd-dialog>
+</app-doc-page>

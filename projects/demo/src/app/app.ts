@@ -16,6 +16,12 @@ import {
   syncTokens,
 } from 'ngx-nudge';
 
+const SHARED_COLUMNS: Column[] = [
+  { key: 'order', width: 110 },
+  { key: 'customer', width: 220 },
+  { key: 'status', width: 140 },
+];
+
 const PRESETS: Record<string, Record<string, string>> = {
   Light: {
     '--nd-color-primary': '#3b5bdb',
@@ -133,6 +139,12 @@ const SNIPPETS = {
               Drag a column edge to resize, or drag a header to reorder. Watch your code update.
             </p>
             <nd-table syncId="orders" [data]="orders" [columns]="orderColumns" />
+            <h3>Signal</h3>
+            <nd-table syncId="t-signal" [data]="orders" [columns]="sigColumns()" />
+            <h3>Nested object</h3>
+            <nd-table syncId="t-nested" [data]="orders" [columns]="cfg.cols" />
+            <h3>Shared constant</h3>
+            <nd-table syncId="t-shared" [data]="orders" [columns]="sharedColumns" />
             <h3>Overview</h3>
             <nd-grid syncId="board" [layout]="board" [rowHeight]="70">
               <ng-template let-w>
@@ -436,6 +448,23 @@ export class App {
     Orders: '1,284',
     Refunds: '1.8%',
   };
+
+  sigColumns = signal<Column[]>([
+    { key: 'order', width: 110 },
+    { key: 'customer', width: 220 },
+    { key: 'status', width: 140 },
+  ]);
+
+  cfg = {
+    title: 'Settings',
+    cols: [
+      { key: 'order', width: 110 },
+      { key: 'customer', width: 220 },
+      { key: 'status', width: 140 },
+    ] as Column[],
+  };
+
+  sharedColumns = SHARED_COLUMNS;
 
   orders = [
     {

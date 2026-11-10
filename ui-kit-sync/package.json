@@ -1,7 +1,7 @@
 {
   "name": "ngx-nudge-sync",
   "displayName": "Nudge Sync",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "publisher": "local",
   "engines": {
     "vscode": "^1.80.0"
@@ -9,6 +9,12 @@
   "description": "Syncs UI Kit component layout changes from the browser to Angular source files",
   "license": "UNLICENSED",
   "main": "./extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Nudge Sync edits files and loads TypeScript from the workspace, so it needs a trusted folder."
+    }
+  },
   "activationEvents": [
     "onStartupFinished"
   ]

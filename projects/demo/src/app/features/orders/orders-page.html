@@ -1,0 +1,18 @@
+<header class="head">
+  <h1>Orders</h1>
+  <p>Last 30 days</p>
+</header>
+
+<section class="card">
+  <nd-table syncId="orders" [data]="orders()" [columns]="orderColumns" />
+</section>
+
+<h2>Overview</h2>
+<nd-grid syncId="board" [layout]="board" [rowHeight]="70">
+  <ng-template let-w>
+    <div class="kpi">
+      <span>{{ w.id }}</span>
+      <strong>{{ kpis()[w.id] }}</strong>
+    </div>
+  </ng-template>
+</nd-grid>

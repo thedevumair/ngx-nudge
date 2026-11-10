@@ -1,0 +1,40 @@
+.head {
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    margin: 4px 0 24px;
+    opacity: 0.6;
+  }
+}
+
+h2 {
+  margin: 40px 0 12px;
+  font-size: 18px;
+}
+
+.card {
+  padding: 12px;
+  background: var(--nd-color-surface, #fff);
+  border-radius: var(--nd-radius, 10px);
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.06),
+    0 4px 12px rgba(16, 24, 40, 0.06);
+}
+
+.kpi {
+  display: grid;
+  gap: 4px;
+
+  span {
+    font-size: 12px;
+    opacity: 0.6;
+  }
+
+  strong {
+    font-size: 22px;
+  }
+}

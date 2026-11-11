@@ -1,8 +1,8 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   TemplateRef,
-  computed,
   contentChild,
   inject,
   input,
@@ -11,20 +11,16 @@ import {
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { syncToSource } from '../core/sync';
+import { GridItem, moveItem, resizeItem } from './grid-logic';
 
-export interface GridItem {
-  id: string;
-  x: number; // column (0-based)
-  y: number; // row (0-based)
-  w: number; // width in columns
-  h: number; // height in rows
-}
+export type { GridItem } from './grid-logic';
 
 @Component({
   selector: 'nd-grid',
   imports: [NgTemplateOutlet],
   templateUrl: './grid.html',
   styleUrl: './grid.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Grid {
   layout = input.required<GridItem[]>();
@@ -36,9 +32,9 @@ export class Grid {
 
   itemTpl = contentChild(TemplateRef);
   items = linkedSignal<GridItem[]>(() => this.layout().map((i) => ({ ...i })));
-  private host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  startDrag(e: PointerEvent, item: GridItem, mode: 'move' | 'resize') {
+  startDrag(e: PointerEvent, item: GridItem, mode: 'move' | 'resize'): void {
     e.preventDefault();
     e.stopPropagation();
     const el = e.currentTarget as HTMLElement;
@@ -50,19 +46,13 @@ export class Grid {
     const sx = e.clientX;
     const sy = e.clientY;
     const start = { ...item };
-    const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
+    const apply = mode === 'move' ? moveItem : resizeItem;
 
     const move = (ev: PointerEvent) => {
       const dx = Math.round((ev.clientX - sx) / stepX);
       const dy = Math.round((ev.clientY - sy) / stepY);
-      this.items.update((list) =>
-        list.map((i) => {
-          if (i.id !== start.id) return i;
-          return mode === 'move'
-            ? { ...i, x: clamp(start.x + dx, 0, this.cols() - i.w), y: Math.max(0, start.y + dy) }
-            : { ...i, w: clamp(start.w + dx, 1, this.cols() - i.x), h: Math.max(1, start.h + dy) };
-        }),
-      );
+      const next = apply(start, dx, dy, this.cols());
+      this.items.update((list) => list.map((i) => (i.id === start.id ? next : i)));
     };
     const up = () => {
       el.removeEventListener('pointermove', move);
@@ -73,7 +63,7 @@ export class Grid {
     el.addEventListener('pointerup', up);
   }
 
-  private emit() {
+  private emit(): void {
     const value = this.items().map(({ id, x, y, w, h }) => ({ id, x, y, w, h }));
     this.layoutChange.emit(value);
     syncToSource(this.syncId(), 'layout', value);

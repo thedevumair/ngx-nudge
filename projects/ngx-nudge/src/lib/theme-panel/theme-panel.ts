@@ -1,131 +1,6 @@
-import { Component, isDevMode, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, isDevMode, signal } from '@angular/core';
 import { syncTokens } from '../core/sync';
-
-export interface ThemeToken {
-  group: string;
-  name: string;
-  label: string;
-  type: 'color' | 'px';
-  default: string;
-  min?: number;
-  max?: number;
-}
-
-export const TOKENS: ThemeToken[] = [
-  // Global: change these and the whole kit follows
-  {
-    group: 'Global',
-    name: '--nd-color-primary',
-    label: 'Primary colour',
-    type: 'color',
-    default: '#3b5bdb',
-  },
-  {
-    group: 'Global',
-    name: '--nd-color-surface',
-    label: 'Surface',
-    type: 'color',
-    default: '#ffffff',
-  },
-  { group: 'Global', name: '--nd-color-text', label: 'Text', type: 'color', default: '#222222' },
-  {
-    group: 'Global',
-    name: '--nd-color-border',
-    label: 'Border',
-    type: 'color',
-    default: '#dddddd',
-  },
-  {
-    group: 'Global',
-    name: '--nd-radius',
-    label: 'Corner radius',
-    type: 'px',
-    default: '6px',
-    min: 0,
-    max: 24,
-  },
-  {
-    group: 'Global',
-    name: '--nd-font-size',
-    label: 'Font size',
-    type: 'px',
-    default: '14px',
-    min: 10,
-    max: 22,
-  },
-
-  // Button
-  {
-    group: 'Button',
-    name: '--nd-button-pad-y',
-    label: 'Padding vertical',
-    type: 'px',
-    default: '8px',
-    min: 0,
-    max: 24,
-  },
-  {
-    group: 'Button',
-    name: '--nd-button-pad-x',
-    label: 'Padding horizontal',
-    type: 'px',
-    default: '16px',
-    min: 0,
-    max: 40,
-  },
-
-  // Card
-  {
-    group: 'Card',
-    name: '--nd-card-pad',
-    label: 'Padding',
-    type: 'px',
-    default: '16px',
-    min: 0,
-    max: 40,
-  },
-
-  // Table
-  {
-    group: 'Table',
-    name: '--nd-table-header-bg',
-    label: 'Header background',
-    type: 'color',
-    default: '#f5f5f5',
-  },
-  {
-    group: 'Table',
-    name: '--nd-table-header-color',
-    label: 'Header text',
-    type: 'color',
-    default: '#222222',
-  },
-  {
-    group: 'Table',
-    name: '--nd-table-stripe-bg',
-    label: 'Row stripe',
-    type: 'color',
-    default: '#fafafa',
-  },
-  {
-    group: 'Table',
-    name: '--nd-table-pad-y',
-    label: 'Padding vertical',
-    type: 'px',
-    default: '8px',
-    min: 0,
-    max: 32,
-  },
-  {
-    group: 'Table',
-    name: '--nd-table-pad-x',
-    label: 'Padding horizontal',
-    type: 'px',
-    default: '12px',
-    min: 0,
-    max: 32,
-  },
-];
+import { TOKENS, ThemeToken } from '../core/tokens';
 
 @Component({
   selector: 'nd-theme-panel',
@@ -212,11 +87,12 @@ export const TOKENS: ThemeToken[] = [
     `,
   ],
   host: { '(window:nd-theme-change)': 'refresh()' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemePanel {
   dev = isDevMode();
   tokens = TOKENS;
-  open = signal(true);
+  open = signal(false);
   values = signal<Record<string, string>>(this.read());
 
   refresh() {

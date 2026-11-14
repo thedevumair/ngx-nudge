@@ -1,7 +1,7 @@
 {
   "name": "ngx-nudge-sync",
   "displayName": "Nudge Sync",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "local",
   "engines": {
     "vscode": "^1.80.0"
@@ -9,6 +9,9 @@
   "description": "Syncs UI Kit component layout changes from the browser to Angular source files",
   "license": "UNLICENSED",
   "main": "./extension.js",
+  "scripts": {
+    "test": "node --test"
+  },
   "capabilities": {
     "untrustedWorkspaces": {
       "supported": "limited",

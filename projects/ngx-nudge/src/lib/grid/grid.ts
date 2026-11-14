@@ -12,6 +12,7 @@ import {
 import { NgTemplateOutlet } from '@angular/common';
 import { syncToSource } from '../core/sync';
 import { GridItem, moveItem, resizeItem } from './grid-logic';
+import { overridable, registerInspectable } from '../core/inspect';
 
 export type { GridItem } from './grid-logic';
 
@@ -28,11 +29,39 @@ export class Grid {
   rowHeight = input(80);
   gap = input(8);
   syncId = input<string>();
+  private readonly rowHeightOv = overridable(this.rowHeight);
+  private readonly gapOv = overridable(this.gap);
+  protected readonly rowHeightValue = this.rowHeightOv.value;
+  protected readonly gapValue = this.gapOv.value;
+
   layoutChange = output<GridItem[]>();
 
   itemTpl = contentChild(TemplateRef);
   items = linkedSignal<GridItem[]>(() => this.layout().map((i) => ({ ...i })));
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  constructor() {
+    registerInspectable({
+      label: 'Dashboard grid',
+      syncId: () => this.syncId(),
+      props: [
+        {
+          name: 'rowHeight',
+          kind: 'number',
+          default: 80,
+          get: this.rowHeightValue,
+          set: (v) => this.rowHeightOv.set(Number(v)),
+        },
+        {
+          name: 'gap',
+          kind: 'number',
+          default: 8,
+          get: this.gapValue,
+          set: (v) => this.gapOv.set(Number(v)),
+        },
+      ],
+    });
+  }
 
   startDrag(e: PointerEvent, item: GridItem, mode: 'move' | 'resize'): void {
     e.preventDefault();
@@ -41,8 +70,8 @@ export class Grid {
     el.setPointerCapture(e.pointerId);
 
     const width = this.host.nativeElement.getBoundingClientRect().width;
-    const stepX = (width + this.gap()) / this.cols();
-    const stepY = this.rowHeight() + this.gap();
+    const stepX = (width + this.gapValue()) / this.cols();
+    const stepY = this.rowHeightValue() + this.gapValue();
     const sx = e.clientX;
     const sy = e.clientY;
     const start = { ...item };

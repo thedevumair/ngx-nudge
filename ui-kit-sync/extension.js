@@ -5,6 +5,7 @@ const path = require('path');
 const { createSyncServer } = require('./src/server');
 const { applyColumns } = require('./src/columns');
 const { applyTokens } = require('./src/tokens');
+const { applyProp } = require('./src/props');
 
 let sync;
 let statusItem;
@@ -36,6 +37,7 @@ function activate(context) {
     {
       '/columns': (d) => applyColumns(loadTs(), d.id, d.prop ?? 'columns', d.value ?? d.columns),
       '/tokens': (d) => applyTokens(d.tokens),
+      '/props': (d) => applyProp(d.id, d.prop, d.value, d.kind, d.isDefault),
     },
     setStatus,
   );

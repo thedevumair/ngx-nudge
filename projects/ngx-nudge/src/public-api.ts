@@ -14,3 +14,5 @@ export * from './lib/select/select';
 export * from './lib/dialog/dialog';
 export * from './lib/field/field';
 export * from './lib/core/tokens';
+export * from './lib/core/inspect';
+export * from './lib/inspector/inspector';

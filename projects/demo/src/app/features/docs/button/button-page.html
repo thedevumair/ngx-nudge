@@ -2,9 +2,9 @@
   <nd-card>
     <h3 ndCardHeader>Preview</h3>
     <div class="row">
-      <button nd-button>Save</button>
-      <button nd-button variant="outline" size="sm">Cancel</button>
-      <button nd-button variant="ghost" disabled>Disabled</button>
+      <button nd-button syncId="docs-save">Save</button>
+      <button nd-button syncId="docs-cancel" variant="outline" size="sm">Cancel</button>
+      <button nd-button syncId="docs-disabled" variant="ghost" disabled>Disabled</button>
     </div>
   </nd-card>
   <app-code-block [code]="code" />

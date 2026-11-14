@@ -1,8 +1,8 @@
 <div
   class="grid"
   [style.grid-template-columns]="'repeat(' + cols() + ', 1fr)'"
-  [style.grid-auto-rows.px]="rowHeight()"
-  [style.gap.px]="gap()"
+  [style.grid-auto-rows.px]="rowHeightValue()"
+  [style.gap.px]="gapValue()"
 >
   @for (item of items(); track item.id) {
     <div

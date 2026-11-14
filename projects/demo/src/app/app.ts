@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Button, ThemePanel } from 'ngx-nudge';
+import { Button, ThemePanel, Inspector } from 'ngx-nudge';
 import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ThemePanel, Button],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ThemePanel, Button, Inspector],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

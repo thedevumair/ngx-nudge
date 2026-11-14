@@ -51,10 +51,12 @@
   </table>
 </div>
 
-<div class="pager">
-  <button type="button" (click)="page.set(page() - 1)" [disabled]="page() === 0">Prev</button>
-  <span>{{ page() + 1 }} / {{ totalPages() }}</span>
-  <button type="button" (click)="page.set(page() + 1)" [disabled]="page() + 1 >= totalPages()">
-    Next
-  </button>
-</div>
+@if (pagerValue()) {
+  <div class="pager">
+    <button type="button" (click)="page.set(page() - 1)" [disabled]="page() === 0">Prev</button>
+    <span>{{ page() + 1 }} / {{ totalPages() }}</span>
+    <button type="button" (click)="page.set(page() + 1)" [disabled]="page() + 1 >= totalPages()">
+      Next
+    </button>
+  </div>
+}

@@ -50,3 +50,15 @@ export function syncTokens(tokens: Record<string, string>): void {
     post('/tokens', { tokens: payload });
   });
 }
+
+/** Writes one input (or the text, prop '$text') of a template element. Dev mode only. */
+export function syncProp(
+  id: string,
+  prop: string,
+  value: unknown,
+  kind: string,
+  isDefault: boolean,
+): void {
+  if (!isDevMode()) return;
+  debounce(`${id}:prop:${prop}`, 400, () => post('/props', { id, prop, value, kind, isDefault }));
+}

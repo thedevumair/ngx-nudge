@@ -1,0 +1,14 @@
+<app-doc-page heading="Menu" lead="A list of actions that opens from a button. Closes on Escape, outside click or after a choice.">
+  <app-preview>
+    <button nd-button variant="outline" [ndMenuTrigger]="actions">Actions ▾</button>
+    <nd-menu #actions label="Project actions">
+      <button type="button" nd-menu-item (click)="action('Rename')">Rename</button>
+      <button type="button" nd-menu-item (click)="action('Duplicate')">Duplicate</button>
+      <button type="button" nd-menu-item (click)="action('Archive')">Archive</button>
+      <button type="button" nd-menu-item variant="danger" (click)="action('Delete')">Delete</button>
+    </nd-menu>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

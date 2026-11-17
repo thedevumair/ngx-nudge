@@ -1,15 +1,19 @@
-<app-doc-page
-  heading="Dialog"
-  lead="Built on the native dialog element: Esc, focus trap and backdrop click included."
->
-  <div><button nd-button (click)="open.set(true)">Open dialog</button></div>
-  <nd-dialog [(open)]="open">
-    <h3 ndDialogTitle>Delete user?</h3>
-    This cannot be undone.
+<app-doc-page heading="Dialog" lead="A modal built on the native dialog element: Escape, focus trap and backdrop click included.">
+  <app-preview>
+    <button nd-button (click)="show('sm')">Small</button>
+    <button nd-button (click)="show('md')">Medium</button>
+    <button nd-button (click)="show('lg')">Large</button>
+  </app-preview>
+
+  <nd-dialog [(open)]="open" [size]="size()">
+    <h3 ndDialogTitle>Delete project?</h3>
+    This removes the project and all of its data. This cannot be undone.
     <div ndDialogActions>
-      <button nd-button variant="outline" size="sm" (click)="open.set(false)">Cancel</button>
-      <button nd-button size="sm" (click)="open.set(false)">Delete</button>
+      <button nd-button variant="outline" (click)="open.set(false)">Cancel</button>
+      <button nd-button variant="danger" (click)="open.set(false)">Delete</button>
     </div>
   </nd-dialog>
+
   <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
 </app-doc-page>

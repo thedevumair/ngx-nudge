@@ -1,7 +1,8 @@
-<app-doc-page
-  heading="Table"
-  lead="Sort, paginate, resize and reorder. Resize a column, then look at table-page.ts."
->
-  <nd-table syncId="docs-users" [data]="users()" [columns]="userColumns" />
+<app-doc-page heading="Table" lead="Sort, paginate, resize and reorder. Resize a column, then look at table-page.ts.">
+  <app-preview>
+    <nd-table syncId="docs-users" [data]="users()" [columns]="userColumns" />
+  </app-preview>
+
   <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
 </app-doc-page>

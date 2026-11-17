@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+
+h2 {
+  margin: 12px 0 10px;
+  font-size: 20px;
+}
+
+.wrap {
+  overflow-x: auto;
+  border: 1px solid var(--nd-color-border, #e5e7eb);
+  border-radius: calc(var(--nd-radius, 8px) + 2px);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th,
+td {
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--nd-color-border, #e5e7eb);
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+th {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--nd-color-text, #1f2937) 55%, transparent);
+  background: color-mix(in srgb, var(--nd-color-text, #1f2937) 3%, var(--nd-color-surface, #ffffff));
+}
+
+code {
+  padding: 1px 6px;
+  font-size: 13px;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--nd-color-text, #1f2937) 7%, transparent);
+  border-radius: 4px;
+}
+
+.type {
+  white-space: normal;
+  color: var(--nd-color-primary, #4f46e5);
+  background: color-mix(in srgb, var(--nd-color-primary, #4f46e5) 8%, transparent);
+}

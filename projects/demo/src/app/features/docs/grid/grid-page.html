@@ -1,8 +1,10 @@
 <app-doc-page heading="Dashboard grid" lead="Drag widgets by the bar, resize from the corner.">
-  <nd-grid syncId="docs-dash" [layout]="dash">
-    <ng-template let-w
-      ><strong>{{ w.id }}</strong> widget</ng-template
-    >
-  </nd-grid>
+  <app-preview [stack]="true">
+    <nd-grid syncId="docs-dash" [layout]="dash">
+      <ng-template let-w><strong>{{ w.id }}</strong> widget</ng-template>
+    </nd-grid>
+  </app-preview>
+
   <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
 </app-doc-page>

@@ -1,0 +1,16 @@
+<app-doc-page heading="Field" lead="A label, hint and error message around any control.">
+  <app-preview [stack]="true">
+    <nd-field syncId="field-email" label="Email" hint="We never share it." [required]="true">
+      <input nd-input type="email" placeholder="name@company.com" />
+    </nd-field>
+    <nd-field syncId="field-website" label="Website" error="Enter a valid URL">
+      <input nd-input aria-invalid="true" value="acme" />
+    </nd-field>
+    <nd-field syncId="field-bio" label="Bio" hint="Two or three sentences.">
+      <textarea nd-input></textarea>
+    </nd-field>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

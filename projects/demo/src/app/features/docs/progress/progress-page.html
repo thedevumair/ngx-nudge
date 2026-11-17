@@ -1,0 +1,15 @@
+<app-doc-page heading="Progress" lead="A bar for known progress, or an animated bar while the end is unknown.">
+  <app-preview [stack]="true">
+    <nd-progress syncId="progress-fixed" [value]="64" />
+    <nd-progress [value]="value()" />
+    <div style="display: flex; gap: 8px; align-items: center">
+      <button nd-button variant="soft" size="sm" (click)="step(-10)">−10</button>
+      <button nd-button variant="soft" size="sm" (click)="step(10)">+10</button>
+      <span>{{ value() }}%</span>
+    </div>
+    <nd-progress />
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

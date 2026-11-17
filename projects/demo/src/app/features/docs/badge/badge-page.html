@@ -1,0 +1,12 @@
+<app-doc-page heading="Badge" lead="Small status labels.">
+  <app-preview>
+    <nd-badge syncId="badge-neutral">Neutral</nd-badge>
+    <nd-badge syncId="badge-primary" variant="primary">New</nd-badge>
+    <nd-badge syncId="badge-success" variant="success" [dot]="true">Active</nd-badge>
+    <nd-badge syncId="badge-warning" variant="warning" [dot]="true">Pending</nd-badge>
+    <nd-badge syncId="badge-danger" variant="danger">Blocked</nd-badge>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

@@ -1,0 +1,9 @@
+<app-doc-page heading="Pagination" lead="Page numbers with ellipses that never take more than seven slots.">
+  <app-preview [stack]="true">
+    <nd-pagination syncId="pagination-main" [total]="240" [pageSize]="10" [(page)]="page" />
+    <p>Page {{ page() }}</p>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

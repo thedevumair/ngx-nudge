@@ -1,0 +1,13 @@
+<app-doc-page heading="Skeleton" lead="Shimmering placeholders while data loads.">
+  <app-preview>
+    <nd-skeleton syncId="skeleton-avatar" shape="circle" width="44px" height="44px" />
+    <div style="display: grid; gap: 8px; flex: 1; min-width: 200px">
+      <nd-skeleton syncId="skeleton-title" width="50%" height="16px" />
+      <nd-skeleton syncId="skeleton-line" width="90%" />
+      <nd-skeleton width="75%" />
+    </div>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

@@ -1,8 +1,16 @@
 <app-doc-page heading="Card" lead="A surface with optional header and footer slots.">
-  <nd-card>
-    <h3 ndCardHeader>Preview</h3>
-    Body content goes here.
-    <div ndCardFooter><button nd-button size="sm">OK</button></div>
-  </nd-card>
+  <app-preview>
+    <nd-card style="width: 300px">
+      <h3 ndCardHeader>Team plan</h3>
+      Up to 10 members, shared projects and priority support.
+      <div ndCardFooter>
+        <button nd-button variant="outline" size="sm">Details</button>
+        <button nd-button size="sm">Upgrade</button>
+      </div>
+    </nd-card>
+    <nd-card style="width: 300px">A card with only a body. Header and footer hide when empty.</nd-card>
+  </app-preview>
+
   <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
 </app-doc-page>

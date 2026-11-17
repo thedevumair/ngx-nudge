@@ -1,0 +1,19 @@
+<app-doc-page heading="Avatar" lead="A photo, or initials on a colour that stays the same for the same name.">
+  <app-preview title="Sizes">
+    <nd-avatar syncId="avatar-sm" name="Ayesha Khan" size="sm" />
+    <nd-avatar syncId="avatar-md" name="Bilal Ahmed" />
+    <nd-avatar syncId="avatar-lg" name="Sana Malik" size="lg" />
+    <nd-avatar name="Broken Image" src="missing.png" />
+  </app-preview>
+
+  <app-preview title="Group">
+    <div style="display: flex">
+      @for (p of people; track p; let first = $first) {
+        <nd-avatar [name]="p" [style.margin-left.px]="first ? 0 : -8" />
+      }
+    </div>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

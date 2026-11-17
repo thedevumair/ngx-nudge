@@ -1,0 +1,11 @@
+<app-doc-page heading="Alert" lead="A message inside the page. Danger alerts are announced right away.">
+  <app-preview [stack]="true">
+    <nd-alert syncId="alert-info" title="Heads up">A new version is available.</nd-alert>
+    <nd-alert syncId="alert-success" variant="success" title="Deployed">Your site is live.</nd-alert>
+    <nd-alert syncId="alert-warning" variant="warning" title="Trial ending">Your trial ends in 3 days.</nd-alert>
+    <nd-alert syncId="alert-danger" variant="danger" title="Payment failed">Please update your card.</nd-alert>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

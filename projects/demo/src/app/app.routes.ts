@@ -11,71 +11,9 @@ export const routes: Routes = [
     path: '',
     loadComponent: () => import('./layout/docs-shell/docs-shell').then((m) => m.DocsShell),
     children: [
-      {
-        path: 'orders',
-        title: 'Orders',
-        loadComponent: () => import('./features/orders/orders-page').then((m) => m.OrdersPage),
-      },
-      {
-        path: 'starter',
-        title: 'Admin starter',
-        loadComponent: () =>
-          import('./features/admin-starter/admin-starter-page').then((m) => m.AdminStarterPage),
-      },
-      {
-        path: 'docs',
-        children: [
-          { path: '', pathMatch: 'full', redirectTo: 'getting-started' },
-          {
-            path: 'getting-started',
-            title: 'Getting started',
-            loadComponent: () =>
-              import('./features/docs/getting-started/getting-started-page').then(
-                (m) => m.GettingStartedPage,
-              ),
-          },
-          {
-            path: 'gallery',
-            title: 'All components',
-            loadComponent: () =>
-              import('./features/docs/gallery/gallery-page').then((m) => m.GalleryPage),
-          },
-          {
-            path: 'button',
-            title: 'Button',
-            loadComponent: () =>
-              import('./features/docs/button/button-page').then((m) => m.ButtonPage),
-          },
-          {
-            path: 'card',
-            title: 'Card',
-            loadComponent: () => import('./features/docs/card/card-page').then((m) => m.CardPage),
-          },
-          {
-            path: 'table',
-            title: 'Table',
-            loadComponent: () =>
-              import('./features/docs/table/table-page').then((m) => m.TablePage),
-          },
-          {
-            path: 'grid',
-            title: 'Grid',
-            loadComponent: () => import('./features/docs/grid/grid-page').then((m) => m.GridPage),
-          },
-          {
-            path: 'forms',
-            title: 'Forms',
-            loadComponent: () =>
-              import('./features/docs/forms/forms-page').then((m) => m.FormsPage),
-          },
-          {
-            path: 'dialog',
-            title: 'Dialog',
-            loadComponent: () =>
-              import('./features/docs/dialog/dialog-page').then((m) => m.DialogPage),
-          },
-        ],
-      },
+      { path: 'orders', title: 'Orders', loadComponent: () => import('./features/orders/orders-page').then((m) => m.OrdersPage) },
+      { path: 'starter', title: 'Admin starter', loadComponent: () => import('./features/admin-starter/admin-starter-page').then((m) => m.AdminStarterPage) },
+      { path: 'docs', loadChildren: () => import('./features/docs/docs.routes').then((m) => m.DOCS_ROUTES) },
     ],
   },
   { path: '**', redirectTo: '' },

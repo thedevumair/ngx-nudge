@@ -1,0 +1,12 @@
+<app-doc-page heading="Input" lead="Native input and textarea elements with kit styling, so forms, ngModel and keyboard work as usual.">
+  <app-preview [stack]="true">
+    <input nd-input syncId="input-name" placeholder="Your name" aria-label="Name" />
+    <input nd-input syncId="input-date" type="date" aria-label="Date" />
+    <input nd-input syncId="input-disabled" placeholder="Disabled" disabled aria-label="Disabled" />
+    <input nd-input aria-invalid="true" value="Invalid value" aria-label="Invalid example" />
+    <textarea nd-input syncId="input-message" placeholder="Message" aria-label="Message"></textarea>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

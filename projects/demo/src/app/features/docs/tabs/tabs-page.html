@@ -1,0 +1,12 @@
+<app-doc-page heading="Tabs" lead="Switch between views. Arrow keys, Home and End move between tabs.">
+  <app-preview [stack]="true">
+    <nd-tabs [(selected)]="tab">
+      <nd-tab label="Overview"><p>Everything at a glance.</p></nd-tab>
+      <nd-tab label="Members"><p>Five people in this project.</p></nd-tab>
+      <nd-tab label="Billing" [disabled]="true"><p>Billing</p></nd-tab>
+    </nd-tabs>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

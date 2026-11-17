@@ -1,0 +1,10 @@
+<app-doc-page heading="Toast" lead="Short messages that close themselves. Add &lt;nd-toaster /&gt; once, then call ToastService anywhere.">
+  <app-preview>
+    @for (v of variants; track v) {
+      <button nd-button variant="outline" (click)="notify(v)">{{ v }}</button>
+    }
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

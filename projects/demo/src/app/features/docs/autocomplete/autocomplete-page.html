@@ -1,0 +1,11 @@
+<app-doc-page heading="Autocomplete" lead="Type to filter a list. Matches are highlighted and the keyboard works as expected.">
+  <app-preview [stack]="true">
+    <nd-field label="City" hint="Try typing “la” or “ka”.">
+      <nd-autocomplete [options]="cities" [(value)]="city" placeholder="Search a city" />
+    </nd-field>
+    <p>Selected: {{ city() ?? 'nothing yet' }}</p>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

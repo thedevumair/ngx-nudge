@@ -1,0 +1,15 @@
+<app-doc-page heading="Select" lead="A styled native select. Works with ngModel and reactive forms.">
+  <app-preview [stack]="true">
+    <select nd-select aria-label="Role">
+      <option>Admin</option>
+      <option>Editor</option>
+      <option>Viewer</option>
+    </select>
+    <select nd-select disabled aria-label="Disabled select">
+      <option>Disabled</option>
+    </select>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

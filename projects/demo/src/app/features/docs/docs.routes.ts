@@ -1,0 +1,33 @@
+import { Routes } from '@angular/router';
+
+/** One route per docs page. Every page is lazy-loaded. */
+export const DOCS_ROUTES: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'getting-started' },
+  { path: 'getting-started', title: 'Getting started', loadComponent: () => import('./getting-started/getting-started-page').then((m) => m.GettingStartedPage) },
+  { path: 'gallery', title: 'All components', loadComponent: () => import('./gallery/gallery-page').then((m) => m.GalleryPage) },
+  { path: 'table', title: 'Table', loadComponent: () => import('./table/table-page').then((m) => m.TablePage) },
+  { path: 'grid', title: 'Dashboard grid', loadComponent: () => import('./grid/grid-page').then((m) => m.GridPage) },
+  { path: 'button', title: 'Button', loadComponent: () => import('./button/button-page').then((m) => m.ButtonPage) },
+  { path: 'input', title: 'Input', loadComponent: () => import('./input/input-page').then((m) => m.InputPage) },
+  { path: 'select', title: 'Select', loadComponent: () => import('./select/select-page').then((m) => m.SelectPage) },
+  { path: 'field', title: 'Field', loadComponent: () => import('./field/field-page').then((m) => m.FieldPage) },
+  { path: 'checkbox', title: 'Checkbox', loadComponent: () => import('./checkbox/checkbox-page').then((m) => m.CheckboxPage) },
+  { path: 'radio', title: 'Radio', loadComponent: () => import('./radio/radio-page').then((m) => m.RadioPage) },
+  { path: 'switch', title: 'Switch', loadComponent: () => import('./switch/switch-page').then((m) => m.SwitchPage) },
+  { path: 'autocomplete', title: 'Autocomplete', loadComponent: () => import('./autocomplete/autocomplete-page').then((m) => m.AutocompletePage) },
+  { path: 'card', title: 'Card', loadComponent: () => import('./card/card-page').then((m) => m.CardPage) },
+  { path: 'badge', title: 'Badge', loadComponent: () => import('./badge/badge-page').then((m) => m.BadgePage) },
+  { path: 'avatar', title: 'Avatar', loadComponent: () => import('./avatar/avatar-page').then((m) => m.AvatarPage) },
+  { path: 'tabs', title: 'Tabs', loadComponent: () => import('./tabs/tabs-page').then((m) => m.TabsPage) },
+  { path: 'menu', title: 'Menu', loadComponent: () => import('./menu/menu-page').then((m) => m.MenuPage) },
+  { path: 'breadcrumb', title: 'Breadcrumb', loadComponent: () => import('./breadcrumb/breadcrumb-page').then((m) => m.BreadcrumbPage) },
+  { path: 'pagination', title: 'Pagination', loadComponent: () => import('./pagination/pagination-page').then((m) => m.PaginationPage) },
+  { path: 'alert', title: 'Alert', loadComponent: () => import('./alert/alert-page').then((m) => m.AlertPage) },
+  { path: 'toast', title: 'Toast', loadComponent: () => import('./toast/toast-page').then((m) => m.ToastPage) },
+  { path: 'dialog', title: 'Dialog', loadComponent: () => import('./dialog/dialog-page').then((m) => m.DialogPage) },
+  { path: 'tooltip', title: 'Tooltip', loadComponent: () => import('./tooltip/tooltip-page').then((m) => m.TooltipPage) },
+  { path: 'spinner', title: 'Spinner', loadComponent: () => import('./spinner/spinner-page').then((m) => m.SpinnerPage) },
+  { path: 'progress', title: 'Progress', loadComponent: () => import('./progress/progress-page').then((m) => m.ProgressPage) },
+  { path: 'skeleton', title: 'Skeleton', loadComponent: () => import('./skeleton/skeleton-page').then((m) => m.SkeletonPage) },
+  { path: '**', redirectTo: 'getting-started' },
+];

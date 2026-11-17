@@ -1,11 +1,20 @@
-<app-doc-page heading="Button" lead="Three variants and three sizes, driven by theme tokens.">
-  <nd-card>
-    <h3 ndCardHeader>Preview</h3>
-    <div class="row">
-      <button nd-button syncId="docs-save">Save</button>
-      <button nd-button syncId="docs-cancel" variant="outline" size="sm">Cancel</button>
-      <button nd-button syncId="docs-disabled" variant="ghost" disabled>Disabled</button>
-    </div>
-  </nd-card>
+<app-doc-page heading="Button" lead="Five variants, three sizes and a loading state, all driven by theme tokens.">
+  <app-preview title="Variants">
+    <button nd-button syncId="button-solid">Solid</button>
+    <button nd-button syncId="button-soft" variant="soft">Soft</button>
+    <button nd-button syncId="button-outline" variant="outline">Outline</button>
+    <button nd-button syncId="button-ghost" variant="ghost">Ghost</button>
+    <button nd-button syncId="button-danger" variant="danger">Delete</button>
+  </app-preview>
+
+  <app-preview title="Sizes and states">
+    <button nd-button syncId="button-sm" size="sm">Small</button>
+    <button nd-button syncId="button-md">Medium</button>
+    <button nd-button syncId="button-lg" size="lg">Large</button>
+    <button nd-button [loading]="saving()" (click)="save()">{{ saving() ? 'Saving' : 'Save' }}</button>
+    <button nd-button disabled>Disabled</button>
+  </app-preview>
+
   <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
 </app-doc-page>

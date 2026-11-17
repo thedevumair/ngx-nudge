@@ -1,0 +1,12 @@
+<app-doc-page heading="Breadcrumb" lead="Shows where the current page sits.">
+  <app-preview>
+    <nd-breadcrumb>
+      <a nd-crumb routerLink="/">Home</a>
+      <a nd-crumb routerLink="/docs/getting-started">Docs</a>
+      <span nd-crumb [current]="true">Breadcrumb</span>
+    </nd-breadcrumb>
+  </app-preview>
+
+  <app-code-block [code]="code" />
+  <app-api-table [rows]="api" />
+</app-doc-page>

@@ -1,0 +1,45 @@
+<div class="win">
+  <div class="chrome">
+    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <div class="tabs" role="tablist">
+      @for (f of files(); track f.name) {
+        <button
+          type="button"
+          role="tab"
+          class="tab"
+          [class.active]="f === current()"
+          [attr.aria-selected]="f === current()"
+          (click)="active.set(f.name)"
+        >
+          {{ f.name }}
+          @if (f.dirty()) {
+            <span class="dot" aria-label="unsaved"></span>
+          }
+        </button>
+      }
+    </div>
+  </div>
+
+  @let file = current();
+  <div class="code" role="tabpanel">
+    @for (
+      l of file.lines();
+      track l.text + ':' + (l.changed ? current().version() : 0);
+      let i = $index
+    ) {
+      <div class="line" [class.chg]="l.changed">
+        <span class="no">{{ i + 1 }}</span>
+        <span class="tx">
+          @for (t of l.tokens; track $index) {
+            <span [class]="'t-' + t.kind">{{ t.text }}</span>
+          }
+        </span>
+      </div>
+    }
+  </div>
+
+  <div class="status">
+    <span><span class="live"></span>ngx-nudge Sync: ON</span>
+    <span>{{ file.dirty() ? 'Unsaved · Ctrl+Z to undo' : 'No changes' }}</span>
+  </div>
+</div>

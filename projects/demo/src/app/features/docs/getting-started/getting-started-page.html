@@ -1,0 +1,35 @@
+<app-doc-page
+  heading="Getting started"
+  lead="Five minutes from install to your first drag that writes code."
+>
+  <h2>1. Install the package</h2>
+  <app-code-block [code]="install" />
+
+  <h2>2. Install the extension</h2>
+  <p>
+    In VS Code or Cursor, open Extensions and search for <strong>ngx-nudge Sync</strong>. Open your
+    project folder and choose <strong>Trust</strong> when asked. The status bar shows
+    <code>ngx-nudge Sync: ON (4567)</code> when it is ready.
+  </p>
+
+  <h2>3. Add the dev tools once</h2>
+  <p>They render nothing in production builds.</p>
+  <app-code-block [code]="root" />
+
+  <h2>4. Your first synced table</h2>
+  <app-code-block [code]="first" />
+  <p>
+    Run <code>ng serve</code>, resize a column, and watch <code>teamColumns</code> change in your
+    editor.
+  </p>
+
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li><strong>Status bar says OFF:</strong> the folder is in Restricted Mode. Trust it.</li>
+    <li>
+      <strong>Nothing changes:</strong> open DevTools, Network, and read the response of the
+      <code>columns</code> or <code>props</code> request. It explains what was not found.
+    </li>
+    <li><strong>No free port:</strong> close extra VS Code windows. Five run side by side.</li>
+  </ul>
+</app-doc-page>

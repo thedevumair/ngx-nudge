@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+/* Global styles. ngx-nudge Sync writes theme changes into the :root block below. */
+
+:root {
+  --nd-color-primary: #4f46e5;
+  --nd-color-primary-contrast: #ffffff;
+  --nd-color-surface: #ffffff;
+  --nd-color-text: #1f2937;
+  --nd-color-border: #e5e7eb;
+  --nd-radius: 10px;
+  --nd-font-size: 14px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--nd-color-text);
+  background: var(--nd-color-surface);
+}

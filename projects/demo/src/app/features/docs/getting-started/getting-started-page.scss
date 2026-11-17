@@ -1,0 +1,16 @@
+h2 {
+  margin: 24px 0 0;
+  font-size: 20px;
+}
+
+p,
+li {
+  line-height: 1.6;
+}
+
+code {
+  padding: 1px 6px;
+  font-size: 0.9em;
+  background: color-mix(in srgb, var(--nd-color-text, #222) 7%, transparent);
+  border-radius: 4px;
+}

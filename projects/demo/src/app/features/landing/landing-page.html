@@ -1,0 +1,186 @@
+<div class="page">
+  <header class="nav">
+    <a class="brand" routerLink="/"><span class="logo" aria-hidden="true"></span>ngx-nudge</a>
+    <nav>
+      <a routerLink="/docs/getting-started">Docs</a>
+      <a routerLink="/docs/button">Components</a>
+      <a [href]="github" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <span class="pill">Free · MIT · Angular · Beta</span>
+    <h1>Drag it in the browser.<br /><span class="grad">It's already in your code.</span></h1>
+    <p class="lead">
+      ngx-nudge is an Angular UI kit whose components write your layout and style changes straight
+      into your own source files, as unsaved edits you can review, undo or save. No prompts. No AI.
+    </p>
+    <div class="cta">
+      <a nd-button size="lg" routerLink="/docs/getting-started">Get started</a>
+      <a nd-button size="lg" variant="outline" class="ghost-light" href="#playground"
+        >Try it here</a
+      >
+    </div>
+    <button type="button" class="install" (click)="copy()">
+      <span class="prompt">$</span>{{ install }}
+      <span class="copy">{{ copied() ? 'Copied' : 'Copy' }}</span>
+    </button>
+  </section>
+
+  <section id="playground" class="section">
+    <div class="head">
+      <h2>Try it. Right here.</h2>
+      <p>This is the real table component. Watch the editor on the right.</p>
+    </div>
+
+    <div class="split">
+      <div class="surface" [style]="themeStyle()">
+        <div class="toolbar">
+          <div class="seg" role="group" aria-label="Density">
+            @for (d of densities; track d) {
+              <button type="button" [class.on]="density() === d" (click)="setDensity(d)">
+                {{ d }}
+              </button>
+            }
+          </div>
+          <label class="switch">
+            <input
+              type="checkbox"
+              [checked]="striped()"
+              (change)="setStriped($any($event.target).checked)"
+            />
+            Striped
+          </label>
+          <div class="swatches" role="group" aria-label="Theme">
+            @for (t of themeNames; track t) {
+              <button
+                type="button"
+                class="sw"
+                [class.on]="theme() === t"
+                [style.background]="themes[t]['--nd-color-primary']"
+                [attr.aria-label]="t + ' theme'"
+                [title]="t"
+                (click)="setTheme(t)"
+              ></button>
+            }
+          </div>
+        </div>
+
+        <p class="hint">
+          <span class="pulse" aria-hidden="true"></span>Drag a column edge, or drag a header to
+          reorder
+        </p>
+
+        <nd-table
+          [data]="team"
+          [columns]="tableInput()"
+          [density]="density()"
+          [striped]="striped()"
+          [pager]="false"
+          (columnsChange)="onColumns($event)"
+        />
+
+        <div class="actions">
+          <button nd-button variant="ghost" size="sm" (click)="reset()">Reset demo</button>
+        </div>
+      </div>
+
+      <app-code-window [files]="tableFiles" [(active)]="tableTab" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="head">
+      <h2>The two-minute change, in two seconds.</h2>
+      <p>Your lead says "make that column wider". Here is what happens next.</p>
+    </div>
+    <div class="compare">
+      <div class="col usual">
+        <h3>The usual way</h3>
+        <ol>
+          @for (s of usualWay; track s) {
+            <li>{{ s }}</li>
+          }
+        </ol>
+      </div>
+      <div class="col nudge">
+        <h3>With ngx-nudge</h3>
+        <ol>
+          @for (s of nudgeWay; track s) {
+            <li>{{ s }}</li>
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="head">
+      <h2>Dashboards too.</h2>
+      <p>Drag a widget by its bar or resize it from the corner. The layout array follows.</p>
+    </div>
+    <div class="split">
+      <div class="surface" [style]="themeStyle()">
+        <nd-grid [layout]="boardInput()" [rowHeight]="64" (layoutChange)="onBoard($event)">
+          <ng-template let-w>
+            <div class="kpi">
+              <span>{{ w.id }}</span>
+              <strong>{{ kpis[w.id] }}</strong>
+            </div>
+          </ng-template>
+        </nd-grid>
+      </div>
+      <app-code-window [files]="boardFiles" [(active)]="boardTab" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="head"><h2>How it works</h2></div>
+    <div class="steps">
+      @for (s of steps; track s.title; let i = $index) {
+        <div class="step">
+          <span class="num">{{ i + 1 }}</span>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.body }}</p>
+          <code>{{ s.code }}</code>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="features">
+      @for (f of features; track f.title) {
+        <div class="feature">
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.body }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="final">
+    <h2>Your lead wants it wider.<br /><span class="grad">Give it to them in one drag.</span></h2>
+    <div class="cta">
+      <a nd-button size="lg" routerLink="/docs/getting-started">Get started</a>
+      <a
+        nd-button
+        size="lg"
+        variant="outline"
+        class="ghost-light"
+        [href]="github"
+        target="_blank"
+        rel="noopener"
+        >Star on GitHub</a
+      >
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>© {{ year }} Muhammad Umair · MIT License</span>
+    <span
+      ><a routerLink="/docs/getting-started">Docs</a> ·
+      <a [href]="github" target="_blank" rel="noopener">GitHub</a></span
+    >
+  </footer>
+</div>

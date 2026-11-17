@@ -1,64 +1,82 @@
-# UiKit
+# ngx-nudge
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+Angular components that write your changes back into your code.
 
-## Code scaffolding
+Resize a table column, drag a dashboard widget, change a colour or a button variant in the browser, and the matching line in your own source file updates itself as an **unsaved edit** in VS Code. Undo works. You decide when to save. No prompts, no AI.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+> Early beta (0.x). APIs may change.
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Install
 
 ```bash
-ng generate --help
+npm install ngx-nudge
 ```
 
-## Building
+Then install the **ngx-nudge Sync** extension in VS Code, or in Cursor through Open VSX. The extension is what writes changes to your files. Without it, the components still work as a normal UI kit.
 
-To build the library, run:
+## Quick start
 
-```bash
-ng build nd-kit
+```ts
+import { Column, Table } from 'ngx-nudge';
+
+@Component({
+  imports: [Table],
+  template: `<nd-table syncId="users" [data]="users" [columns]="userColumns" />`,
+})
+export class UsersPage {
+  users = [{ name: 'Ayesha', email: 'ayesha@acme.pk' }];
+
+  userColumns: Column[] = [
+    { key: 'name', label: 'Name', width: 200 },
+    { key: 'email', label: 'Email', width: 260 },
+  ];
+}
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+Add the dev tools once, in your root component. They render nothing in production builds:
 
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-
-   ```bash
-   cd dist/ngx-nudge
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+```html
+<nd-toaster />
+<nd-theme-panel />
+<nd-inspector />
 ```
 
-## Running end-to-end tests
+Run `ng serve`, resize a column in the browser, and watch `userColumns` change in your editor.
 
-For end-to-end (e2e) testing, run:
+## How it works
 
-```bash
-ng e2e
-```
+- `syncId` marks an element as editable. Without it, changes stay on screen only.
+- Changes go to the extension on `127.0.0.1` in **dev mode only** (`isDevMode()`). Production builds never send anything.
+- The extension edits the open document as an unsaved change, so `Ctrl+Z` reverts it.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Components
 
-## Additional Resources
+| Group | Components |
+|---|---|
+| Actions | Button |
+| Forms | Input, Select, Field, Checkbox, Radio, Switch, Autocomplete |
+| Data display | Table, Dashboard grid, Card, Badge, Avatar |
+| Navigation | Tabs, Menu, Breadcrumb, Pagination |
+| Feedback | Alert, Toast, Dialog, Tooltip, Spinner, Progress, Skeleton |
+| Dev tools | Theme panel, Inspector |
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Native-element components (`input[nd-input]`, `select[nd-select]`, `input[nd-checkbox]`, `input[nd-radio]`, `input[nd-switch]`) and Autocomplete work with `ngModel` and reactive forms.
+
+## What syncs to your code
+
+| Change in the browser | Written to |
+|---|---|
+| Table column width, order, label, visibility | the bound `columns` array |
+| Grid widget position and size | the bound `layout` array |
+| Theme panel colours and sizes | `--nd-*` variables in `styles.scss` |
+| Inspector: inputs and text of a component with a `syncId` | the attribute or text in its template |
+
+The extension rewrites plain data only: `x = [...]`, `x = signal([...])`, `cfg = { cols: [...] }` and top-level `const` arrays. Arrays that contain function calls, references or translations are left untouched, and the extension tells you why.
+
+## Theming
+
+Every component reads `--nd-*` CSS variables, for example `--nd-color-primary`, `--nd-radius` and `--nd-font-size`. The full list is exported as `TOKENS`.
+
+## License
+
+MIT

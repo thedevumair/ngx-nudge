@@ -1,6 +1,13 @@
 {
   "name": "ngx-nudge",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "description": "Angular components that write layout and style changes from the browser back into your own source files.",
+  "keywords": ["angular", "components", "ui-kit", "table", "dashboard", "theming", "developer-tools", "live-edit"],
+  "license": "MIT",
+  "author": "Muhammad Umair",
+  "homepage": "https://github.com/thedevumair/ngx-nudge#readme",
+  "repository": { "type": "git", "url": "https://github.com/thedevumair/ngx-nudge.git" },
+  "bugs": { "url": "https://github.com/thedevumair/ngx-nudge/issues" },
   "peerDependencies": {
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0",

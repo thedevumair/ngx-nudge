@@ -1,24 +1,26 @@
 {
   "name": "ngx-nudge-sync",
-  "displayName": "Nudge Sync",
-  "version": "0.0.7",
-  "publisher": "local",
-  "engines": {
-    "vscode": "^1.80.0"
-  },
-  "description": "Syncs UI Kit component layout changes from the browser to Angular source files",
-  "license": "UNLICENSED",
+  "displayName": "ngx-nudge Sync",
+  "description": "Writes ngx-nudge layout, style and inspector changes from the browser into your Angular source, as unsaved edits.",
+  "version": "0.1.0",
+  "publisher": "muhammadumair",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": { "color": "#1f2937", "theme": "dark" },
+  "categories": ["Other"],
+  "keywords": ["angular", "ngx-nudge", "ui", "live edit", "visual editing"],
+  "repository": { "type": "git", "url": "https://github.com/thedevumair/ngx-nudge.git" },
+  "bugs": { "url": "https://github.com/thedevumair/ngx-nudge/issues" },
+  "engines": { "vscode": "^1.80.0" },
   "main": "./extension.js",
   "scripts": {
     "test": "node --test"
   },
+  "activationEvents": ["onStartupFinished"],
   "capabilities": {
     "untrustedWorkspaces": {
       "supported": "limited",
-      "description": "Nudge Sync edits files and loads TypeScript from the workspace, so it needs a trusted folder."
+      "description": "ngx-nudge Sync edits files and loads TypeScript from the workspace, so it needs a trusted folder."
     }
-  },
-  "activationEvents": [
-    "onStartupFinished"
-  ]
+  }
 }

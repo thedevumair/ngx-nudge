@@ -1,5 +1,7 @@
-// spinner/spinner.ts
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { overridable, registerInspectable } from '../core/inspect';
+
+export type SpinnerSize = 'sm' | 'md' | 'lg';
 
 /** <nd-spinner /> */
 @Component({
@@ -32,8 +34,29 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { role: 'status', 'aria-label': 'Loading', '[attr.data-size]': 'size()' },
+  host: { role: 'status', 'aria-label': 'Loading', '[attr.data-size]': 'sizeValue()' },
 })
 export class Spinner {
-  size = input<'sm' | 'md' | 'lg'>('md');
+  size = input<SpinnerSize>('md');
+  syncId = input<string>();
+
+  private readonly sizeOv = overridable(this.size);
+  protected readonly sizeValue = this.sizeOv.value;
+
+  constructor() {
+    registerInspectable({
+      label: 'Spinner',
+      syncId: () => this.syncId(),
+      props: [
+        {
+          name: 'size',
+          kind: 'select',
+          options: ['sm', 'md', 'lg'],
+          default: 'md',
+          get: this.sizeValue,
+          set: (v) => this.sizeOv.set(v as SpinnerSize),
+        },
+      ],
+    });
+  }
 }

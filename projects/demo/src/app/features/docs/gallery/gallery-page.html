@@ -114,6 +114,70 @@
         <nd-avatar name="Sana Malik" size="lg" />
       </div>
     </nd-card>
+    <nd-card>
+      <h3 ndCardHeader>Menu, autocomplete & date</h3>
+      <div class="form">
+        <div class="row">
+          <button nd-button variant="outline" [ndMenuTrigger]="actions">Actions ▾</button>
+          <nd-menu #actions label="Project actions">
+            <button type="button" nd-menu-item (click)="action('Rename')">Rename</button>
+            <button type="button" nd-menu-item (click)="action('Duplicate')">Duplicate</button>
+            <button type="button" nd-menu-item (click)="action('Archive')">Archive</button>
+            <button type="button" nd-menu-item variant="danger" (click)="action('Delete')">
+              Delete
+            </button>
+          </nd-menu>
+        </div>
+        <nd-field label="City" hint="Try typing “la” or “ka”.">
+          <nd-autocomplete [options]="cities" [(value)]="city" placeholder="Search a city" />
+        </nd-field>
+        <p class="muted">Selected: {{ city() ?? 'nothing yet' }}</p>
+        <nd-field label="Start date">
+          <input nd-input type="date" />
+        </nd-field>
+      </div>
+    </nd-card>
+
+    <nd-card>
+      <h3 ndCardHeader>Navigation & loading</h3>
+      <div class="stack">
+        <nd-breadcrumb>
+          <a nd-crumb routerLink="/">Home</a>
+          <a nd-crumb routerLink="/docs/gallery">Projects</a>
+          <span nd-crumb [current]="true">Settings</span>
+        </nd-breadcrumb>
+        <nd-pagination [total]="240" [pageSize]="10" [(page)]="page" />
+        <p class="muted">Page {{ page() }} of 24</p>
+        <div class="row">
+          <label class="opt"
+            ><input
+              type="checkbox"
+              nd-switch
+              [checked]="loading()"
+              (change)="loading.set($any($event.target).checked)"
+            />
+            Loading</label
+          >
+        </div>
+        @if (loading()) {
+          <div class="row">
+            <nd-skeleton shape="circle" width="40px" height="40px" />
+            <div class="stack" style="flex: 1; gap: 8px">
+              <nd-skeleton width="60%" />
+              <nd-skeleton width="90%" />
+            </div>
+          </div>
+        } @else {
+          <div class="row">
+            <nd-avatar name="Ayesha Khan" />
+            <div>
+              <strong>Ayesha Khan</strong>
+              <p class="muted">Admin · ayesha&#64;acme.pk</p>
+            </div>
+          </div>
+        }
+      </div>
+    </nd-card>
   </div>
 
   <nd-dialog [(open)]="dialogOpen" size="sm">

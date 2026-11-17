@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { registerToggle } from '../../public-api';
 
 /** <label><input type="checkbox" nd-switch /> Email alerts</label> */
 @Component({
@@ -8,4 +9,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { role: 'switch' },
 })
-export class Switch {}
+export class Switch {
+  syncId = input<string>();
+
+  constructor() {
+    registerToggle('Switch', () => this.syncId());
+  }
+}

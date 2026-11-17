@@ -1,0 +1,26 @@
+.panel {
+  position: fixed;
+  z-index: 10000;
+  display: grid;
+  min-width: 190px;
+  max-width: 320px;
+  padding: 6px;
+  background: var(--nd-color-surface, #ffffff);
+  border: 1px solid var(--nd-color-border, #e5e7eb);
+  border-radius: calc(var(--nd-radius, 8px) + 2px);
+  box-shadow: 0 16px 40px rgba(16, 24, 40, 0.16);
+  animation: nd-menu-in 0.12s ease-out;
+}
+
+@keyframes nd-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    animation: none;
+  }
+}

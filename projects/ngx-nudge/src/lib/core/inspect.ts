@@ -77,3 +77,29 @@ export function findInspectable(target: EventTarget | null): Inspectable | undef
   }
   return undefined;
 }
+
+/** Registers a native checkbox, switch or radio: checked and disabled. */
+export function registerToggle(label: string, syncId: () => string | undefined): void {
+  if (!isDevMode()) return;
+  const el = inject<ElementRef<HTMLInputElement>>(ElementRef).nativeElement;
+  registerInspectable({
+    label,
+    syncId,
+    props: [
+      {
+        name: 'checked',
+        kind: 'boolean',
+        default: false,
+        get: () => el.checked,
+        set: (v) => (el.checked = !!v),
+      },
+      {
+        name: 'disabled',
+        kind: 'boolean',
+        default: false,
+        get: () => el.disabled,
+        set: (v) => (el.disabled = !!v),
+      },
+    ],
+  });
+}

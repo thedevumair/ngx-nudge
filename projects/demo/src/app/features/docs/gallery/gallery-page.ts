@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import {
   Alert,
   Avatar,
@@ -19,6 +20,14 @@ import {
   ToastService,
   ToastVariant,
   Tooltip,
+  Autocomplete,
+  Breadcrumb,
+  Crumb,
+  Menu,
+  MenuItem,
+  MenuTrigger,
+  Pagination,
+  Skeleton,
 } from 'ngx-nudge';
 import { DocPage } from '../../../shared/ui/doc-page/doc-page';
 
@@ -50,6 +59,15 @@ const TOASTS: Record<ToastVariant, [string, string]> = {
     TextInput,
     Tooltip,
     DocPage,
+    Autocomplete,
+    Breadcrumb,
+    Crumb,
+    Menu,
+    MenuItem,
+    MenuTrigger,
+    Pagination,
+    Skeleton,
+    RouterLink,
   ],
   templateUrl: './gallery-page.html',
   styleUrl: './gallery-page.scss',
@@ -64,6 +82,25 @@ export class GalleryPage {
   readonly saving = signal(false);
   readonly progress = signal(64);
   readonly tab = signal(0);
+  readonly cities = [
+    'Karachi',
+    'Lahore',
+    'Islamabad',
+    'Rawalpindi',
+    'Faisalabad',
+    'Multan',
+    'Peshawar',
+    'Quetta',
+    'Sialkot',
+    'Hyderabad',
+  ];
+  readonly city = signal<string | null>(null);
+  readonly page = signal(5);
+  readonly loading = signal(true);
+
+  action(name: string): void {
+    this.toast.show({ title: name, message: 'Menu item clicked.' });
+  }
 
   notify(v: ToastVariant): void {
     const [title, message] = TOASTS[v];

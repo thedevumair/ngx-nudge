@@ -25,16 +25,33 @@ type ColumnField = 'label' | 'width' | 'sortable' | 'hidden';
   selector: 'nd-inspector',
   template: `
     @if (dev) {
-      @if (hover(); as r) {
+      @if (hover(); as h) {
         <div
           class="outline"
-          [style.left.px]="r.left"
-          [style.top.px]="r.top"
-          [style.width.px]="r.width"
-          [style.height.px]="r.height"
-        ></div>
+          [class.off]="!h.editable"
+          [style.left.px]="h.rect.left"
+          [style.top.px]="h.rect.top"
+          [style.width.px]="h.rect.width"
+          [style.height.px]="h.rect.height"
+        >
+          <span class="tag">{{ h.label }}{{ h.editable ? '' : ' · not editable' }}</span>
+        </div>
       }
       <div class="dock">
+        @if (missed(); as m) {
+          <div class="panel">
+            <header>
+              <strong>&lt;{{ m }}&gt;</strong>
+              <button type="button" class="close" aria-label="Close" (click)="missed.set(null)">
+                ×
+              </button>
+            </header>
+            <p class="meta warn">
+              This element has no editable inputs. Try a button, badge, table, grid, field label,
+              input, checkbox, alert, avatar or progress bar.
+            </p>
+          </div>
+        }
         @if (selected(); as item) {
           <div class="panel">
             <header>
@@ -172,6 +189,27 @@ type ColumnField = 'label' | 'width' | 'sortable' | 'hidden';
       border-radius: 4px;
       background: rgba(79, 70, 229, 0.08);
     }
+    .outline.off {
+      border-style: dashed;
+      border-color: #9ca3af;
+      background: rgba(156, 163, 175, 0.08);
+    }
+    .tag {
+      position: absolute;
+      top: -22px;
+      left: -2px;
+      padding: 2px 6px;
+      font:
+        600 11px system-ui,
+        sans-serif;
+      color: #fff;
+      white-space: nowrap;
+      background: #4f46e5;
+      border-radius: 4px;
+    }
+    .outline.off .tag {
+      background: #6b7280;
+    }
     .dock {
       position: fixed;
       left: 16px;
@@ -297,8 +335,9 @@ type ColumnField = 'label' | 'width' | 'sortable' | 'hidden';
 export class Inspector {
   readonly dev = isDevMode();
   readonly active = signal(false);
-  readonly hover = signal<DOMRect | null>(null);
+  readonly hover = signal<{ rect: DOMRect; editable: boolean; label: string } | null>(null);
   readonly selected = signal<Inspectable | null>(null);
+  readonly missed = signal<string | null>(null);
   readonly values = signal<Record<string, unknown>>({});
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
@@ -310,7 +349,17 @@ export class Inspector {
 
     const move = (e: PointerEvent) => {
       if (!this.active() || inPanel(e.target)) return;
-      this.hover.set(findInspectable(e.target)?.element.getBoundingClientRect() ?? null);
+      const item = findInspectable(e.target);
+      const el = item?.element ?? (e.target instanceof HTMLElement ? e.target : null);
+      this.hover.set(
+        el
+          ? {
+              rect: el.getBoundingClientRect(),
+              editable: !!item,
+              label: item?.label ?? el.tagName.toLowerCase(),
+            }
+          : null,
+      );
     };
     // While inspecting, swallow presses so drag/resize/click handlers on the page do not run
     const block = (e: Event) => {
@@ -323,7 +372,13 @@ export class Inspector {
       e.preventDefault();
       e.stopPropagation();
       const item = findInspectable(e.target);
-      if (item) this.select(item);
+      if (item) {
+        this.select(item);
+      } else {
+        this.selected.set(null);
+        this.missed.set(e.target instanceof Element ? e.target.tagName.toLowerCase() : 'element');
+        this.stop();
+      }
     };
     const key = (e: KeyboardEvent) => {
       if (e.key === 'Escape') this.stop();
@@ -352,6 +407,7 @@ export class Inspector {
   }
 
   select(item: Inspectable): void {
+    this.missed.set(null);
     this.selected.set(item);
     this.values.set(Object.fromEntries(item.props.map((p) => [p.name, p.get()])));
     this.stop();

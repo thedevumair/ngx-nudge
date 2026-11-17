@@ -20,7 +20,9 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       <ng-content />
     </label>
     @if (error()) {
-      <p class="msg error" role="alert">{{ error() }}</p>
+      <p class="msg error" role="alert">
+        <span class="ic" aria-hidden="true">!</span>{{ error() }}
+      </p>
     } @else if (hint()) {
       <p class="msg">{{ hint() }}</p>
     }

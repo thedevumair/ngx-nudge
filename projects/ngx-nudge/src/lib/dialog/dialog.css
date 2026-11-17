@@ -2,37 +2,123 @@ dialog {
   width: 100%;
   max-width: min(520px, calc(100vw - 32px));
   padding: 0;
-  border: 0;
+  color: inherit;
   background: transparent;
+  border: 0;
 }
+
+dialog[data-size='sm'] {
+  max-width: min(400px, calc(100vw - 32px));
+}
+dialog[data-size='lg'] {
+  max-width: min(760px, calc(100vw - 32px));
+}
+
 dialog::backdrop {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(15, 18, 30, 0.45);
+  backdrop-filter: blur(3px);
+}
+
+dialog[open] .panel {
+  animation: nd-pop 0.18s ease-out;
+}
+dialog[open]::backdrop {
+  animation: nd-fade 0.18s ease-out;
+}
+
+@keyframes nd-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+@keyframes nd-fade {
+  from {
+    opacity: 0;
+  }
 }
 
 .panel {
-  color: var(--nd-color-text, #222222);
+  color: var(--nd-color-text, #1f2937);
   background: var(--nd-color-surface, #ffffff);
-  border: 1px solid var(--nd-color-border, #dddddd);
-  border-radius: var(--nd-radius, 6px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--nd-color-border, #e5e7eb);
+  border-radius: calc(var(--nd-radius, 8px) + 6px);
+  box-shadow: 0 24px 60px rgba(16, 24, 40, 0.22);
   overflow: hidden;
 }
-.header,
-.body,
-.footer {
-  padding: 16px;
-}
+
 .header {
-  font-weight: 600;
-  border-bottom: 1px solid var(--nd-color-border, #dddddd);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 20px 0 24px;
 }
+
+.title {
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.title ::ng-deep :is(h1, h2, h3, h4) {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.close:hover {
+  opacity: 1;
+  background: color-mix(in srgb, var(--nd-color-text, #1f2937) 8%, transparent);
+}
+.close:focus-visible {
+  outline: 2px solid var(--nd-color-primary, #4f46e5);
+}
+
+.close svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.body {
+  padding: 10px 24px 22px;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--nd-color-text, #1f2937) 80%, transparent);
+}
+
 .footer {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  border-top: 1px solid var(--nd-color-border, #dddddd);
+  padding: 14px 20px;
+  background: color-mix(in srgb, var(--nd-color-text, #1f2937) 3%, transparent);
+  border-top: 1px solid var(--nd-color-border, #e5e7eb);
 }
-.header:empty,
+
 .footer:empty {
   display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog[open] .panel,
+  dialog[open]::backdrop {
+    animation: none;
+  }
 }

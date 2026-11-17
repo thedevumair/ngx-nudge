@@ -1,0 +1,84 @@
+.stack {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 10000;
+  display: grid;
+  gap: 10px;
+  width: min(360px, calc(100vw - 32px));
+}
+
+.toast {
+  --_c: var(--nd-color-primary, #4f46e5);
+
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 12px 12px 0;
+  overflow: hidden;
+  color: var(--nd-color-text, #1f2937);
+  background: var(--nd-color-surface, #ffffff);
+  border: 1px solid var(--nd-color-border, #e5e7eb);
+  border-radius: calc(var(--nd-radius, 8px) + 2px);
+  box-shadow: 0 12px 32px rgba(16, 24, 40, 0.16);
+  animation: nd-in 0.2s ease-out;
+}
+
+.toast[data-variant='success'] {
+  --_c: var(--nd-color-success, #2f9e44);
+}
+.toast[data-variant='warning'] {
+  --_c: var(--nd-color-warning, #e67700);
+}
+.toast[data-variant='danger'] {
+  --_c: var(--nd-color-danger, #e03131);
+}
+
+.bar {
+  align-self: stretch;
+  width: 4px;
+  margin: -12px 0;
+  background: var(--_c);
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
+.text strong {
+  display: block;
+  font-size: 14px;
+}
+.text p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  opacity: 0.75;
+  line-height: 1.45;
+}
+
+.x {
+  font-size: 18px;
+  line-height: 1;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.x:hover {
+  opacity: 1;
+}
+
+@keyframes nd-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}

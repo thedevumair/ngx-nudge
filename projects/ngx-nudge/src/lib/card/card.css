@@ -1,27 +1,51 @@
 :host {
   display: block;
-  color: var(--nd-card-color, var(--nd-color-text, #222222));
+  color: var(--nd-card-color, var(--nd-color-text, #1f2937));
   background: var(--nd-card-bg, var(--nd-color-surface, #ffffff));
-  border: 1px solid var(--nd-card-border-color, var(--nd-color-border, #dddddd));
-  border-radius: var(--nd-card-radius, var(--nd-radius, 6px));
+  border: 1px solid var(--nd-card-border-color, var(--nd-color-border, #e5e7eb));
+  border-radius: var(--nd-card-radius, calc(var(--nd-radius, 8px) + 4px));
+  box-shadow: var(
+    --nd-card-shadow,
+    0 1px 2px rgba(16, 24, 40, 0.04),
+    0 6px 18px rgba(16, 24, 40, 0.06)
+  );
   overflow: hidden;
 }
 
-.header,
-.body,
-.footer {
-  padding: var(--nd-card-pad, 16px);
-}
-
 .header {
-  font-weight: 600;
-  border-bottom: 1px solid var(--nd-card-border-color, var(--nd-color-border, #dddddd));
-}
-.footer {
-  border-top: 1px solid var(--nd-card-border-color, var(--nd-color-border, #dddddd));
+  padding: 18px var(--nd-card-pad, 20px) 0;
+  font-size: 16px;
+  font-weight: 650;
 }
 
-.header:empty,
+.header ::ng-deep :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.body {
+  padding: 12px var(--nd-card-pad, 20px) var(--nd-card-pad, 20px);
+  line-height: 1.55;
+}
+
+.header:empty {
+  display: none;
+}
+.header:empty + .body {
+  padding-top: var(--nd-card-pad, 20px);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 14px var(--nd-card-pad, 20px);
+  background: color-mix(in srgb, var(--nd-color-text, #1f2937) 3%, transparent);
+  border-top: 1px solid var(--nd-card-border-color, var(--nd-color-border, #e5e7eb));
+}
+
 .footer:empty {
   display: none;
 }

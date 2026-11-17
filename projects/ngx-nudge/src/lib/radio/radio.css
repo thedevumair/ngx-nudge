@@ -1,0 +1,47 @@
+:host {
+  --_primary: var(--nd-color-primary, #4f46e5);
+
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-grid;
+  place-content: center;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  background: var(--nd-color-surface, #ffffff);
+  border: 1.5px solid color-mix(in srgb, var(--nd-color-text, #1f2937) 32%, transparent);
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+:host::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--_primary);
+  transform: scale(0);
+  transition: transform 0.12s ease-out;
+}
+
+:host(:checked) {
+  border-color: var(--_primary);
+}
+:host(:checked)::before {
+  transform: scale(1);
+}
+:host(:hover:not(:disabled)) {
+  border-color: var(--_primary);
+}
+:host(:focus-visible) {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--_primary) 30%, transparent);
+}
+:host(:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

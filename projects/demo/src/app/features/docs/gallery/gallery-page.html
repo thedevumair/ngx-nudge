@@ -1,0 +1,127 @@
+<app-doc-page
+  heading="All components"
+  lead="Every ngx-nudge component in one place. Switch the theme from the sidebar to see them change together."
+>
+  <div class="grid">
+    <nd-card>
+      <h3 ndCardHeader>Buttons</h3>
+      <div class="row">
+        <button nd-button>Solid</button>
+        <button nd-button variant="soft">Soft</button>
+        <button nd-button variant="outline">Outline</button>
+        <button nd-button variant="ghost">Ghost</button>
+        <button nd-button variant="danger">Delete</button>
+      </div>
+      <div class="row">
+        <button nd-button size="sm">Small</button>
+        <button nd-button>Medium</button>
+        <button nd-button size="lg">Large</button>
+        <button nd-button [loading]="saving()" (click)="save()">
+          {{ saving() ? 'Saving' : 'Save' }}
+        </button>
+        <button nd-button disabled>Disabled</button>
+      </div>
+    </nd-card>
+
+    <nd-card>
+      <h3 ndCardHeader>Form controls</h3>
+      <div class="form">
+        <nd-field label="Email" hint="We never share it." [required]="true">
+          <input nd-input type="email" placeholder="name@company.com" />
+        </nd-field>
+        <nd-field label="Role">
+          <select nd-select>
+            <option>Admin</option>
+            <option>Editor</option>
+            <option>Viewer</option>
+          </select>
+        </nd-field>
+        <nd-field label="Website" error="Enter a valid URL">
+          <input nd-input aria-invalid="true" value="acme" />
+        </nd-field>
+        <div class="row">
+          <label class="opt"><input type="checkbox" nd-checkbox checked /> Remember me</label>
+          <label class="opt"><input type="checkbox" nd-switch checked /> Email alerts</label>
+        </div>
+        <div class="row">
+          <label class="opt"><input type="radio" nd-radio name="plan" checked /> Free</label>
+          <label class="opt"><input type="radio" nd-radio name="plan" /> Pro</label>
+          <label class="opt"><input type="radio" nd-radio name="plan" disabled /> Enterprise</label>
+        </div>
+      </div>
+    </nd-card>
+
+    <nd-card>
+      <h3 ndCardHeader>Feedback</h3>
+      <div class="stack">
+        <nd-alert variant="success" title="Deployed">Your site is live.</nd-alert>
+        <nd-alert variant="warning" title="Trial ending">Your trial ends in 3 days.</nd-alert>
+        <div class="row">
+          @for (v of toastVariants; track v) {
+            <button nd-button variant="outline" size="sm" (click)="notify(v)">
+              Toast: {{ v }}
+            </button>
+          }
+        </div>
+        <div class="row">
+          <nd-spinner size="sm" />
+          <nd-spinner />
+          <nd-spinner size="lg" />
+        </div>
+        <nd-progress [value]="progress()" />
+        <div class="row">
+          <button nd-button variant="soft" size="sm" (click)="step(-10)">−10</button>
+          <button nd-button variant="soft" size="sm" (click)="step(10)">+10</button>
+          <span class="muted">{{ progress() }}%</span>
+        </div>
+        <nd-progress />
+      </div>
+    </nd-card>
+
+    <nd-card>
+      <h3 ndCardHeader>Navigation & overlays</h3>
+      <nd-tabs [(selected)]="tab">
+        <nd-tab label="Overview"
+          ><p class="muted">Tabs support arrow keys, Home and End.</p></nd-tab
+        >
+        <nd-tab label="Members">
+          <div class="avatars">
+            @for (p of people; track p) {
+              <nd-avatar [name]="p" />
+            }
+          </div>
+        </nd-tab>
+        <nd-tab label="Billing" [disabled]="true"><p>Billing</p></nd-tab>
+      </nd-tabs>
+      <div class="row spaced">
+        <button nd-button variant="outline" ndTooltip="Opens a modal dialog">Hover me</button>
+        <button nd-button (click)="dialogOpen.set(true)">Open dialog</button>
+      </div>
+    </nd-card>
+
+    <nd-card>
+      <h3 ndCardHeader>Badges & avatars</h3>
+      <div class="row">
+        <nd-badge>Neutral</nd-badge>
+        <nd-badge variant="primary">New</nd-badge>
+        <nd-badge variant="success" [dot]="true">Active</nd-badge>
+        <nd-badge variant="warning" [dot]="true">Pending</nd-badge>
+        <nd-badge variant="danger">Blocked</nd-badge>
+      </div>
+      <div class="row">
+        <nd-avatar name="Ayesha Khan" size="sm" />
+        <nd-avatar name="Bilal Ahmed" />
+        <nd-avatar name="Sana Malik" size="lg" />
+      </div>
+    </nd-card>
+  </div>
+
+  <nd-dialog [(open)]="dialogOpen" size="sm">
+    <h3 ndDialogTitle>Delete project?</h3>
+    This removes the project and all of its data. This cannot be undone.
+    <div ndDialogActions>
+      <button nd-button variant="outline" (click)="dialogOpen.set(false)">Cancel</button>
+      <button nd-button variant="danger" (click)="dialogOpen.set(false)">Delete</button>
+    </div>
+  </nd-dialog>
+</app-doc-page>

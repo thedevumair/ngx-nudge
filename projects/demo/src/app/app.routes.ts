@@ -35,6 +35,12 @@ export const routes: Routes = [
               ),
           },
           {
+            path: 'gallery',
+            title: 'All components',
+            loadComponent: () =>
+              import('./features/docs/gallery/gallery-page').then((m) => m.GalleryPage),
+          },
+          {
             path: 'button',
             title: 'Button',
             loadComponent: () =>

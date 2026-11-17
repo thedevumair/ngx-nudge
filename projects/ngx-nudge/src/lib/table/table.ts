@@ -88,6 +88,14 @@ export class Table<T extends Record<string, any>> {
   rows = computed(() => pageRows(this.sorted(), this.page(), this.pageSizeValue()));
   totalPages = computed(() => pageCount(this.data().length, this.pageSizeValue()));
 
+  rangeLabel = computed(() => {
+    const total = this.data().length;
+    if (!total) return '0 rows';
+    const size = this.pageSizeValue();
+    const start = this.page() * size;
+    return `${start + 1}–${Math.min(start + size, total)} of ${total}`;
+  });
+
   constructor() {
     registerInspectable({
       label: 'Table',

@@ -1,27 +1,59 @@
 :host {
+  --_primary: var(--nd-color-primary, #4f46e5);
+  --_danger: var(--nd-color-danger, #e03131);
+
   display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: var(--nd-input-pad-y, 8px) var(--nd-input-pad-x, 12px);
+  height: var(--nd-input-height, 38px);
+  padding: 0 var(--nd-input-pad-x, 12px);
   font: inherit;
   font-size: var(--nd-input-font-size, var(--nd-font-size, 14px));
-  color: var(--nd-input-color, var(--nd-color-text, #222222));
+  color: var(--nd-color-text, #1f2937);
   background: var(--nd-input-bg, var(--nd-color-surface, #ffffff));
-  border: 1px solid var(--nd-input-border-color, var(--nd-color-border, #dddddd));
-  border-radius: var(--nd-input-radius, var(--nd-radius, 6px));
+  border: 1px solid var(--nd-input-border-color, var(--nd-color-border, #d1d5db));
+  border-radius: var(--nd-input-radius, var(--nd-radius, 8px));
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
+
+:host(textarea) {
+  height: auto;
+  min-height: 92px;
+  padding: 10px var(--nd-input-pad-x, 12px);
+  line-height: 1.5;
+  resize: vertical;
+}
+
 :host::placeholder {
-  color: color-mix(in srgb, var(--nd-color-text, #222222) 45%, transparent);
+  color: color-mix(in srgb, var(--nd-color-text, #1f2937) 42%, transparent);
 }
+
+:host(:hover) {
+  border-color: color-mix(in srgb, var(--nd-color-text, #1f2937) 32%, transparent);
+}
+
 :host(:focus) {
-  outline: 2px solid var(--nd-color-focus, #4c8bf5);
-  outline-offset: 1px;
-  border-color: var(--nd-color-primary, #3b5bdb);
+  outline: none;
+  border-color: var(--_primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--_primary) 22%, transparent);
 }
-:host(:disabled) {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+
 :host([aria-invalid='true']) {
-  border-color: var(--nd-color-danger, #e03131);
+  border-color: var(--_danger);
+}
+:host([aria-invalid='true']:focus) {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--_danger) 22%, transparent);
+}
+
+:host(:disabled) {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: color-mix(
+    in srgb,
+    var(--nd-color-text, #1f2937) 4%,
+    var(--nd-color-surface, #ffffff)
+  );
 }

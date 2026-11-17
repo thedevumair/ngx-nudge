@@ -1,54 +1,128 @@
 :host {
+  --_tone: var(--nd-color-primary, #4f46e5);
+  --_on-tone: var(--nd-color-primary-contrast, #ffffff);
+
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: var(--nd-button-pad-y, 8px) var(--nd-button-pad-x, 16px);
+  box-sizing: border-box;
+  height: var(--nd-button-height, 38px);
+  padding: 0 var(--nd-button-pad-x, 16px);
   font: inherit;
   font-size: var(--nd-button-font-size, var(--nd-font-size, 14px));
   font-weight: 600;
-  line-height: 1.25;
-  color: var(--nd-button-color, var(--nd-color-primary-contrast, #ffffff));
-  background: var(--nd-button-bg, var(--nd-color-primary, #3b5bdb));
-  border: 1px solid var(--nd-button-bg, var(--nd-color-primary, #3b5bdb));
-  border-radius: var(--nd-button-radius, var(--nd-radius, 6px));
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--_on-tone);
+  background: var(--_tone);
+  border: 1px solid var(--_tone);
+  border-radius: var(--nd-button-radius, var(--nd-radius, 8px));
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
   cursor: pointer;
   text-decoration: none;
   user-select: none;
-  transition: filter 0.15s ease;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s,
+    transform 0.08s;
 }
 
 :host(:hover) {
-  filter: brightness(0.92);
+  background: color-mix(in srgb, var(--_tone) 88%, #000);
+  border-color: color-mix(in srgb, var(--_tone) 88%, #000);
+}
+
+:host(:active) {
+  transform: translateY(1px);
 }
 
 :host(:focus-visible) {
-  outline: 2px solid var(--nd-color-focus, #4c8bf5);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--_tone) 32%, transparent);
 }
 
 :host([disabled]),
 :host([aria-disabled='true']) {
   opacity: 0.5;
+  box-shadow: none;
   pointer-events: none;
 }
 
+:host(.loading) {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+:host([data-variant='danger']) {
+  --_tone: var(--nd-color-danger, #e03131);
+  --_on-tone: #ffffff;
+}
+
+:host([data-variant='soft']) {
+  color: var(--_tone);
+  background: color-mix(in srgb, var(--_tone) 12%, transparent);
+  border-color: transparent;
+  box-shadow: none;
+}
+:host([data-variant='soft']:hover) {
+  background: color-mix(in srgb, var(--_tone) 20%, transparent);
+  border-color: transparent;
+}
+
 :host([data-variant='outline']) {
-  color: var(--nd-button-bg, var(--nd-color-primary, #3b5bdb));
+  color: var(--_tone);
   background: transparent;
+  border-color: color-mix(in srgb, var(--_tone) 45%, transparent);
+  box-shadow: none;
+}
+:host([data-variant='outline']:hover) {
+  background: color-mix(in srgb, var(--_tone) 8%, transparent);
+  border-color: var(--_tone);
 }
 
 :host([data-variant='ghost']) {
-  color: var(--nd-button-bg, var(--nd-color-primary, #3b5bdb));
+  color: var(--_tone);
   background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+:host([data-variant='ghost']:hover) {
+  background: color-mix(in srgb, var(--_tone) 9%, transparent);
   border-color: transparent;
 }
 
 :host([data-size='sm']) {
-  padding: 4px 10px;
-  font-size: 12px;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+  gap: 6px;
 }
 :host([data-size='lg']) {
-  padding: 12px 22px;
-  font-size: 16px;
+  height: 46px;
+  padding: 0 22px;
+  font-size: 15px;
+}
+
+.spin {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: nd-spin 0.7s linear infinite;
+}
+
+@keyframes nd-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    transition: none;
+  }
 }

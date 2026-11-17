@@ -11,11 +11,12 @@ const VARIANTS: readonly BadgeVariant[] = ['neutral', 'primary', 'success', 'war
   template: '<ng-content />',
   styleUrl: './badge.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[attr.data-variant]': 'variantValue()' },
+  host: { '[attr.data-variant]': 'variantValue()', '[class.dot]': 'dot()' },
 })
 export class Badge {
   variant = input<BadgeVariant>('neutral');
   syncId = input<string>();
+  dot = input(false);
 
   private readonly variantOv = overridable(this.variant);
   protected readonly variantValue = this.variantOv.value;

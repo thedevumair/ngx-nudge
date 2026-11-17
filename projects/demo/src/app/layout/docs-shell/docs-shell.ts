@@ -13,7 +13,13 @@ export class DocsShell {
   readonly theme = inject(ThemeService);
 
   readonly nav = [
-    { group: 'Start', links: [{ path: '/docs/getting-started', label: 'Getting started' }] },
+    {
+      group: 'Start',
+      links: [
+        { path: '/docs/getting-started', label: 'Getting started' },
+        { path: '/docs/gallery', label: 'All components' },
+      ],
+    },
     {
       group: 'Examples',
       links: [

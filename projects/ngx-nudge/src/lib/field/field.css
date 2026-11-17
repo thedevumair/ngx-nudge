@@ -1,24 +1,44 @@
 :host {
   display: block;
 }
+
 .field {
   display: grid;
-  gap: 4px;
+  gap: 6px;
 }
+
 .label {
   font-size: 13px;
   font-weight: 600;
+  color: var(--nd-color-text, #1f2937);
 }
+
 .req {
   margin-left: 2px;
   color: var(--nd-color-danger, #e03131);
 }
+
 .msg {
-  margin: 4px 0 0;
-  font-size: 12px;
-  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: color-mix(in srgb, var(--nd-color-text, #1f2937) 60%, transparent);
 }
+
 .msg.error {
   color: var(--nd-color-danger, #e03131);
-  opacity: 1;
+}
+
+.ic {
+  display: inline-grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--nd-color-danger, #e03131);
+  border-radius: 50%;
 }

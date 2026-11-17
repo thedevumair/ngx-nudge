@@ -1,17 +1,32 @@
 :host {
-  --_c: var(--nd-color-text, #222222);
+  --_c: var(--nd-color-text, #1f2937);
+
   display: inline-flex;
   align-items: center;
-  padding: 2px 10px;
+  gap: 6px;
+  box-sizing: border-box;
+  height: 22px;
+  padding: 0 9px;
   font-size: 12px;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1;
+  white-space: nowrap;
   color: var(--_c);
-  background: color-mix(in srgb, var(--_c) 14%, transparent);
+  background: color-mix(in srgb, var(--_c) 11%, transparent);
+  border: 1px solid color-mix(in srgb, var(--_c) 18%, transparent);
   border-radius: 999px;
 }
+
+:host(.dot)::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 :host([data-variant='primary']) {
-  --_c: var(--nd-color-primary, #3b5bdb);
+  --_c: var(--nd-color-primary, #4f46e5);
 }
 :host([data-variant='success']) {
   --_c: var(--nd-color-success, #2f9e44);

@@ -21,14 +21,20 @@
             (dragend)="onDragEnd()"
           >
             @if (c.sortable) {
-              <button type="button" (click)="sortBy(c.key)">
-                {{ c.label }}
-                @if (sortKey() === c.key) {
-                  {{ sortDir() === 'asc' ? '▲' : '▼' }}
-                }
+              <button type="button" class="sort" (click)="sortBy(c.key)">
+                <span>{{ c.label }}</span>
+                <svg
+                  class="arrow"
+                  [class.on]="sortKey() === c.key"
+                  [class.desc]="sortKey() === c.key && sortDir() === 'desc'"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                >
+                  <path d="M4 10l4-4 4 4" />
+                </svg>
               </button>
             } @else {
-              {{ c.label }}
+              <span class="plain">{{ c.label }}</span>
             }
             <span class="resizer" (pointerdown)="startResize($event, c.key, th)"></span>
           </th>
@@ -44,7 +50,7 @@
         </tr>
       } @empty {
         <tr>
-          <td [attr.colspan]="cols().length">No data</td>
+          <td class="empty" [attr.colspan]="cols().length">No data</td>
         </tr>
       }
     </tbody>
@@ -53,10 +59,25 @@
 
 @if (pagerValue()) {
   <div class="pager">
-    <button type="button" (click)="page.set(page() - 1)" [disabled]="page() === 0">Prev</button>
-    <span>{{ page() + 1 }} / {{ totalPages() }}</span>
-    <button type="button" (click)="page.set(page() + 1)" [disabled]="page() + 1 >= totalPages()">
-      Next
-    </button>
+    <span>{{ rangeLabel() }}</span>
+    <div class="nav">
+      <button
+        type="button"
+        aria-label="Previous page"
+        (click)="page.set(page() - 1)"
+        [disabled]="page() === 0"
+      >
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 4l-4 4 4 4" /></svg>
+      </button>
+      <span class="pages">{{ page() + 1 }} / {{ totalPages() }}</span>
+      <button
+        type="button"
+        aria-label="Next page"
+        (click)="page.set(page() + 1)"
+        [disabled]="page() + 1 >= totalPages()"
+      >
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4l4 4-4 4" /></svg>
+      </button>
+    </div>
   </div>
 }
